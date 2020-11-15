@@ -1,6 +1,5 @@
 package com.wechat.wx.controller;
 
-import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.wechat.model.ErrCode;
@@ -11,10 +10,7 @@ import com.wechat.wx.model.RedisKeyConst;
 import com.wechat.wx.service.CustomMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +21,7 @@ import java.util.HashMap;
  * @Date 2020/11/14 
  */
 @RestController
+@CrossOrigin
 @RequestMapping("menu")
 public class CustomMenuController {
     @Autowired

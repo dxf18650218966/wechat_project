@@ -21,7 +21,7 @@
     <modules>
         <module>pay</module>
         <module>common</module>
-        <module>business</module>
+        <module>mall</module>
         <module>thirdparty</module>
     </modules>
 

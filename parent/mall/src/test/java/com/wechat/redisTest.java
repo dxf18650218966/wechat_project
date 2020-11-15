@@ -22,7 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 // 因为business依赖了有主启动类的thirdparty，junit不知道加载哪个启动类，需要在junit的@SpringBootTest注解上指定启动类。
 // 否则会报：junit报错Found multiple @SpringBootConfiguration annotated classes
-@SpringBootTest(classes = {BusinessApplication.class})
+@SpringBootTest(classes = {MallApplication.class})
 public class redisTest {
     @Autowired
     private  RedisTemplate<String,String> redisTemplate;

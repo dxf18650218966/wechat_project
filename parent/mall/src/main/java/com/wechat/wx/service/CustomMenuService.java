@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,7 +64,9 @@ public class CustomMenuService {
         ArrayList<Level1MenuModel> level1MenuList = new ArrayList<>(16);
 
         // 过滤:  查询上级菜单为空
-        List<GzhMenuBean> collect = gzhMenuList.stream().filter(menu -> StrUtil.isBlank(menu.getParentMenu())).collect(Collectors.toList());
+        List<GzhMenuBean> collect = gzhMenuList.stream()
+                .filter(menu -> StrUtil.isBlank(menu.getParentMenu()))
+                .sorted(Comparator.comparing(GzhMenuBean ::getSort)).collect(Collectors.toList());
         collect.forEach(menu -> {
             // 创建一级菜单
             Level1MenuModel level1MenuModel = new Level1MenuModel();
@@ -91,8 +94,8 @@ public class CustomMenuService {
                 // 通过一级菜单查找出属于自己的二级菜单
                 List<GzhMenuBean> subCollect = gzhMenuList.stream()
                         .filter(subMenu -> subMenu.getParentMenu().equals(menu.getId()))
-                        .sorted().collect(Collectors.toList());
-                if (ObjectUtil.isNotNull(subCollect)) {
+                        .sorted(Comparator.comparing(GzhMenuBean ::getSort)).collect(Collectors.toList());
+                if (subCollect.size() > 0) {
                     // 二级菜单容器
                     ArrayList<Level2MenuModel> level2MenuList = new ArrayList<>(16);
                     subCollect.forEach(subMenu -> {

@@ -1,0 +1,21 @@
+server:
+  port: 9010
+
+spring:
+  #----------- redis --------------
+  redis:
+    host: 127.0.0.1
+    database: 0
+    port: 6379
+    password:
+    timeout: 5000 #连接超时时间（毫秒）
+    lettuce:
+      pool:
+        #连接池最大连接数默认8 负数表示无限制
+        max-active: 8
+        #连接池最大阻塞等待时间 默认值-1  负数表示无限制
+        max-wait: -1
+        #连接池最大空闲连接 默认8
+        max-idle: 8
+        #连接池最小空闲连接 默认0
+        min-idle: 0

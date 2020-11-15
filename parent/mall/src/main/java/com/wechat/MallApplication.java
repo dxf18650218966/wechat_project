@@ -14,14 +14,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.wechat.**.mapper")
 @EnableScheduling //开启定时任务
 @SpringBootApplication
-public class BusinessApplication extends SpringBootServletInitializer {
+public class MallApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication.run(BusinessApplication.class, args);
+        SpringApplication.run(MallApplication.class, args);
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(BusinessApplication.class);
+        return application.sources(MallApplication.class);
     }
 }
