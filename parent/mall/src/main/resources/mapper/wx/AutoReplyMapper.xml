@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.wx.mapper.AutoReplyMapper">
+  <resultMap id="BaseResultMap" type="com.wechat.wx.entity.AutoReplyBean">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="foreign_key" jdbcType="VARCHAR" property="foreignKey" />
+    <result column="gzh" jdbcType="VARCHAR" property="gzh" />
+    <result column="gzh_name" jdbcType="VARCHAR" property="gzhName" />
+    <result column="has_valid" jdbcType="VARCHAR" property="hasValid" />
+    <result column="has_valid_name" jdbcType="VARCHAR" property="hasValidName" />
+    <result column="reply_type" jdbcType="VARCHAR" property="replyType" />
+    <result column="reply_type_name" jdbcType="VARCHAR" property="replyTypeName" />
+    <result column="message_type" jdbcType="VARCHAR" property="messageType" />
+    <result column="message_type_name" jdbcType="VARCHAR" property="messageTypeName" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
+    <result column="keyword" jdbcType="VARCHAR" property="keyword" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, foreign_key, gzh, gzh_name, has_valid, has_valid_name, reply_type, reply_type_name, 
+    message_type, message_type_name, content, pic_url, title, "describe", url, activity_name, 
+    keyword
+  </sql>
+  <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from auto_reply
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+
+</mapper>

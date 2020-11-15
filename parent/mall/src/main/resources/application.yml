@@ -1,0 +1,61 @@
+server:
+  port: 9000
+
+spring:
+  #----------- DB -----------------
+  datasource:
+    # -- SQL Server
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://47.112.119.181:1433;databaseName=crm
+    username: sa
+    password: lingyue_2020
+
+    # -- MySql
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://localhost:3307/demo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+    #username: root
+    #password: dxf...dxf
+
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 20
+      min-idle: 20
+      max-active: 50
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+  #----------- redis --------------
+  redis:
+    host: 127.0.0.1
+    database: 0
+    port: 6379
+    password:
+    timeout: 5000 #连接超时时间（毫秒）
+    lettuce:
+      pool:
+        #连接池最大连接数默认8 负数表示无限制
+        max-active: 8
+        #连接池最大阻塞等待时间 默认值-1  负数表示无限制
+        max-wait: -1
+        #连接池最大空闲连接 默认8
+        max-idle: 8
+        #连接池最小空闲连接 默认0
+        min-idle: 0
+
+#----------- mybatis -------------
+mybatis-plus:
+  #指定mybatis映射文件的地址 【**任意多级目录、 *多个任意字符】
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+    map-underscore-to-camel-case: true
+    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    call-setters-on-nulls: true
+
+# ----------- 自定义 -------------
+sys:
+  # 域名
+  domain-name: http://47.112.119.181/
+  # 公众号相对路径拼接成绝对路径
+  absolute-path: https://zysy.injoy-mall.cn/obpm/pay/?weixinId=35002#
+  # 文件上传路径
+  upload-path: D:\uploadField\

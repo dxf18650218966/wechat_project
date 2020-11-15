@@ -1,0 +1,42 @@
+Shift+F6，重构 – 重命名
+Shift+Tab 取消缩进
+
+Alt+回车 (根据变量生成类、接口、创建方法 等等)
+Alt+Shift+Up/Down 上/下移一行
+Alt+Insert 代码自动生成，如生成对象的set/get方法，构造函数，toString()等
+
+选中想被try/catch包围的语句，ctrl+alt+t
+Ctrl+X  剪切行
+Ctrl+D  复制行
+Ctrl+y  删除行
+Ctrl+O  重写方法
+Ctrl+H  显示类结构图（类的继承层次）
+Ctrl+F  文本查找   Ctrl+Shift+F 整个项目
+Ctrl+R  文本查找替换   Ctrl+Shift+R 整个项目
+Ctrl+E  显示最近打开的文件记录
+Ctrl+N  根据输入的类名查找类文件
+Ctrl+J  插入自定义动态代码模板 -- 写好的一些代码
+Ctrl+P  方法参数提示显示
+Ctrl+Del 删除光标后面的代码
+Ctrl+BackSpace 删除光标前的代码
+
+Ctrl+Alt+L 格式化代码
+Ctrl+Alt+I 选中部分进行代码缩进
+Ctrl+Alt+S 打开IntelliJ IDEA系统设置
+Ctrl+Alt+v 代码类型补全
+Alt+Enter  代码类型补全、找打类在哪个包下快速导入
+Ctrl+Alt+B，跳转到方法实现处
+
+Ctrl+Shift+U，大小写转化
+Ctrl+Shift+F9 刷新页面
+Ctrl+Shift+V 调出剪切板
+Ctrl+Shift+Z 取消撤销
+
+Shift+Enter，向下插入新行
+Ctrl+Enter，上插一行
+Ctrl+”+/-”，当前方法展开、折叠
+Ctrl+Shift+”+/-”，全部展开、折叠
+
+alt+enter 序列化
+ALT + 鼠标左键   复制错误信息
+
