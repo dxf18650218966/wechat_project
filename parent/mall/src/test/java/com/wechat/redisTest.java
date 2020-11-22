@@ -3,10 +3,13 @@ package com.wechat;
 import cn.hutool.core.lang.Console;
 
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wechat.tool.DateUtil;
+import com.wechat.tool.RedisUtil;
 import com.wechat.wx.entity.AutoReplyBean;
 import com.wechat.wx.mapper.AutoReplyMapper;
+import com.wechat.wx.model.WxUserInfo;
 import com.wechat.wx.util.MaterialImgUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,16 +35,12 @@ public class redisTest {
     MaterialImgUtil mediaUploadUtil;
     @Autowired
     AutoReplyMapper autoReplyMapper;
-
+    @Autowired
+    private RedisUtil redisUtil;
     @Test
     public void test() throws Exception{
-        AutoReplyBean autoReplyBean = autoReplyMapper.selectOne(new QueryWrapper<AutoReplyBean>()
-                // 所属公众号
-                .eq("gzh", "gh_babca4b63868")
-                // 回复类型  （0关注回复 1关键字回复）
-                .eq("reply_type", "1")
-                // 关键字
-                .like("keyword", "美甲"));
-        Console.log("::::::"+autoReplyBean);
+
+
+        Console.log( redisUtil.del("43534"));
     }
 }

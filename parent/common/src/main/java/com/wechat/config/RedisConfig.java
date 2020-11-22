@@ -52,5 +52,6 @@ public class RedisConfig {
 /**  @Autowired
  *   private RedisTemplate redisTemplate;
  *
- *  如果我们没有把哪个bean命名为redisTemplate 而这里又这么注入，会导致我们使用的springboot内置的tempalte而不是我们配置的，导致我们的配置不生效，从而埋坑，所以最好的方法就是把方法命名为redisTemplate从而覆盖系统内置的。
+ *  如果我们没有把哪个bean命名为redisTemplate 而这里又这么注入，会导致我们使用的springboot内置的tempalte而不是我们配置的，
+ *  导致我们的配置不生效，从而埋坑，所以最好的方法就是把方法命名为redisTemplate从而覆盖系统内置的。
  */

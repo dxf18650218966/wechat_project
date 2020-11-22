@@ -21,7 +21,7 @@ import java.util.Map;
  * JAXB提供了一种把object转成XML，或者把XML转成object的机制。
  */
 public class XmlConvertUtil {
-    private static Logger logger = LoggerFactory.getLogger(XmlConvertUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XmlConvertUtil.class);
     private static String MARK_PREFIX="<![CDATA[";
     private static String MARK_SUFFIX="]]>";
 
@@ -251,7 +251,7 @@ public class XmlConvertUtil {
             sb.append(">");
             return sb.toString();
         }catch (Exception e){
-            logger.error("将map集合转换成xml,并给集合中的每个属性添加自定义内容异常：：：{}", ExceptionUtils.getStackTrace(e));
+            LOGGER.error("将map集合转换成xml,并给集合中的每个属性添加自定义内容异常：：：{}", ExceptionUtils.getStackTrace(e));
         }
         return "";
     }

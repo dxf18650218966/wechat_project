@@ -8,33 +8,33 @@ package com.wechat.model;
 public enum ErrCode {
     // ------------ 1000 是代码问题提示            2000是业务提示 ----------------
     // 缺少请求参数
-    MISSING_REQUEST_PARAMETERS(1000,"missing request parameters !"),
+    MISSING_REQUEST_PARAMETERS("1000","missing request parameters !"),
 
     // 请求参数错误
-    REQUEST_PARAMETER_ERROR(1001,"request parameter error !"),
+    REQUEST_PARAMETER_ERROR("1001","request parameter error !"),
 
     // 请登陆
-    PLEASE_LOG_IN(1003,"please log in !"),
+    PLEASE_LOG_IN("1003","please log in !"),
 
     // 系统内部错误
-    SYSTEM_INTERNAL_ERROR(1004,"system internal error !"),
+    SYSTEM_INTERNAL_ERROR("1004","system internal error !"),
 
     // 签名错误
-    SIGN_ERROR(1005,"sign error !"),
+    SIGN_ERROR("1005","sign error !"),
 
     // 图片上传失败
-    IMG_UPLOAD_FAILED(1006,"img upload failed !"),
+    IMG_UPLOAD_FAILED("1006","img upload failed !"),
 
     // 文件上传失败
-    FILE_UPLOAD_FAILED(1007,"file upload failed !");
+    FILE_UPLOAD_FAILED("1007","file upload failed !");
 
 
     // ------------ 2000 业务提示 ------------
 
-    private int errCode;
+    private String errCode;
     private String errMsg;
 
-    ErrCode(int errCode,String errMsg) {
+    ErrCode(String errCode,String errMsg) {
         this.errCode = errCode;
         this.errMsg = errMsg;
     }
@@ -44,16 +44,16 @@ public enum ErrCode {
      * @param key
      * @return
      */
-    public static String getValue(int key) {
+    public static String getValue(String key) {
         for (ErrCode ele : values()) {
-            if(ele.getErrCode() == key) {
+            if(ele.getErrCode().equals(key)) {
                 return ele.getErrMsg();
             }
         }
         return null;
     }
 
-    public void setErrCode(int errCode) {
+    public void setErrCode(String errCode) {
         this.errCode = errCode;
     }
 
@@ -61,7 +61,7 @@ public enum ErrCode {
         this.errMsg = errMsg;
     }
 
-    public int getErrCode() {
+    public String getErrCode() {
         return errCode;
     }
 

@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wechat.constant.SystemConst;
 import com.wechat.tool.DateUtil;
+import com.wechat.tool.RedisUtil;
 import com.wechat.tool.XmlConvertUtil;
 import com.wechat.wx.entity.AutoReplyBean;
 import com.wechat.wx.mapper.AutoReplyMapper;
@@ -28,7 +29,7 @@ public class AutoReplyService {
     @Autowired
     private AutoReplyMapper autoReplyMapper;
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisUtil redisUtil;
     @Autowired
     private MaterialImgUtil mediaUploadUtil;
 
@@ -83,13 +84,13 @@ public class AutoReplyService {
      */
     public Object replyTemplate(AutoReplyBean autoReplyBean, String toUserName, String fromUserName){
         // 该配置将要回复的消息写入缓存（有效期1天）
-        String msg = stringRedisTemplate.opsForValue().get(RedisKeyConst.AUTO_REPLY_ID + autoReplyBean.getId());
+        String msg = redisUtil.get(RedisKeyConst.AUTO_REPLY_ID + autoReplyBean.getId());
         if(StrUtil.isNotBlank(msg)){
             return msg;
         }
 
         // 获取accessToken
-        String accessToken = stringRedisTemplate.opsForValue().get(RedisKeyConst.ORIGINAL_ID + toUserName);
+        String accessToken = redisUtil.get(RedisKeyConst.ORIGINAL_ID + toUserName);
         if(autoReplyBean != null && StrUtil.isNotBlank(accessToken)) {
             Map map = new HashMap<String, String>(16);
             // 接收方帐号（收到的OpenID）  注意：接收和发送消息的 ToUserName、FromUserName是相反的
@@ -108,7 +109,7 @@ public class AutoReplyService {
                 map.put("Content", autoReplyBean.getContent());
                 // 该配置将要回复的消息写入缓存
                 msg = XmlConvertUtil.mapToXml(map, SystemConst.XML, "","");
-                stringRedisTemplate.opsForValue().set(RedisKeyConst.AUTO_REPLY_ID + autoReplyBean.getId(), msg,1, TimeUnit.DAYS);
+                redisUtil.set(RedisKeyConst.AUTO_REPLY_ID + autoReplyBean.getId(), msg,1, TimeUnit.DAYS);
                 return msg;
             }
 
@@ -126,7 +127,7 @@ public class AutoReplyService {
                         map.put("Image", img);
                         // 该配置将要回复的消息写入缓存
                         msg = XmlConvertUtil.mapToXml(map, SystemConst.XML, "","");
-                        stringRedisTemplate.opsForValue().set(RedisKeyConst.AUTO_REPLY_ID + autoReplyBean.getId(), msg, 1, TimeUnit.DAYS);
+                        redisUtil.set(RedisKeyConst.AUTO_REPLY_ID + autoReplyBean.getId(), msg, 1, TimeUnit.DAYS);
                         return msg;
                     }
                 }
@@ -141,7 +142,7 @@ public class AutoReplyService {
 
                 // 该配置将要回复的消息写入缓存
                 msg = XmlConvertUtil.mapToXml(map, SystemConst.XML, "","");
-                stringRedisTemplate.opsForValue().set(RedisKeyConst.AUTO_REPLY_ID + autoReplyBean.getId(), msg, 1, TimeUnit.DAYS);
+                redisUtil.set(RedisKeyConst.AUTO_REPLY_ID + autoReplyBean.getId(), msg, 1, TimeUnit.DAYS);
                 return msg;
             }
         }

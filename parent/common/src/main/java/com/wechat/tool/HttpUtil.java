@@ -28,7 +28,7 @@ import java.util.Set;
  * @Date 2020/1/12
  */
 public class HttpUtil {
-    private final static Logger logger = LoggerFactory.getLogger(HttpUtil.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(HttpUtil.class);
     /**
      * 编码格式。发送编码格式统一用UTF-8
      */
@@ -93,7 +93,7 @@ public class HttpUtil {
             // 获得响应数据
             return getHttpClientResult(httpResponse, httpClient, httpPost);
         }catch (Exception e){
-            logger.error(ExceptionUtils.getStackTrace(e));
+            LOGGER.error("http请求异常:::{}", ExceptionUtils.getStackTrace(e));
         }finally {
             // 释放资源
             release(httpResponse, httpClient);
@@ -129,7 +129,7 @@ public class HttpUtil {
             // 获得响应数据
             return getHttpClientResult(httpResponse, httpClient, httpPost);
         }catch (Exception e){
-            logger.error(ExceptionUtils.getStackTrace(e));
+            LOGGER.error("http请求异常:::{}",ExceptionUtils.getStackTrace(e));
         }finally {
             // 释放资源
             release(httpResponse, httpClient);
@@ -191,7 +191,7 @@ public class HttpUtil {
             // 执行请求并获得响应结果
             return getHttpClientResult(httpResponse, httpClient, httpGet);
         }catch (Exception e){
-            logger.error(ExceptionUtils.getStackTrace(e));
+            LOGGER.error("http请求异常:::{}", ExceptionUtils.getStackTrace(e));
         }finally {
             // 释放资源
             release(httpResponse, httpClient);
@@ -225,7 +225,7 @@ public class HttpUtil {
             // 获得响应数据
             return getHttpClientResult(httpResponse, httpClient, httpPut);
         }catch (Exception e){
-            logger.error(ExceptionUtils.getStackTrace(e));
+            LOGGER.error("http请求异常:::{}", ExceptionUtils.getStackTrace(e));
         }finally {
             release(httpResponse, httpClient);
         }
@@ -256,7 +256,7 @@ public class HttpUtil {
             // 获得响应数据
             return getHttpClientResult(httpResponse, httpClient, httpPut);
         }catch (Exception e){
-            logger.error(ExceptionUtils.getStackTrace(e));
+            LOGGER.error("http请求异常:::{}", ExceptionUtils.getStackTrace(e));
         }finally {
             release(httpResponse, httpClient);
         }
@@ -289,7 +289,7 @@ public class HttpUtil {
             // 获得响应数据
             return getHttpClientResult(httpResponse, httpClient, httpPatch);
         }catch (Exception e){
-            logger.error(ExceptionUtils.getStackTrace(e));
+            LOGGER.error("http请求异常:::{}", ExceptionUtils.getStackTrace(e));
         }finally {
             release(httpResponse, httpClient);
         }
@@ -320,7 +320,7 @@ public class HttpUtil {
             // 获得响应数据
             return getHttpClientResult(httpResponse, httpClient, httpPatch);
         }catch (Exception e){
-            logger.error(ExceptionUtils.getStackTrace(e));
+            LOGGER.error("http请求异常:::{}", ExceptionUtils.getStackTrace(e));
         }finally {
             release(httpResponse, httpClient);
         }
@@ -348,7 +348,7 @@ public class HttpUtil {
             httpResponse = httpClient.execute(httpDelete);
             return getHttpClientResult(httpResponse, httpClient, httpDelete);
         }catch (Exception e){
-            logger.error(ExceptionUtils.getStackTrace(e));
+            LOGGER.error( "http请求异常:::{}", ExceptionUtils.getStackTrace(e));
         } finally {
             release(httpResponse, httpClient);
         }
@@ -424,7 +424,7 @@ public class HttpUtil {
                 httpClient.close();
             }
         }catch (Exception e){
-            logger.error(ExceptionUtils.getStackTrace(e));
+            LOGGER.error("http请求异常:::{}", ExceptionUtils.getStackTrace(e));
         }
     }
 }

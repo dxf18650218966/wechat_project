@@ -19,14 +19,6 @@ public interface SystemConst {
     String ONE = "1";
     String TWO = "2";
 
-    String RETURN_CODE = "return_code";
-    String RETURN_MSG = "return_msg";
-    String RESULT_CODE = "result_code";
-    String ERR_CODE = "errcode";
-    String ERR_MSG = "errmsg";
-    String DATA = "data";
-
-
     // 编码
     String UTF8 = "UTF-8";
     String GBK = "GBK";

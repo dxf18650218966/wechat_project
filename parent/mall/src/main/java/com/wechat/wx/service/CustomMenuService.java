@@ -37,7 +37,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class CustomMenuService {
-    private Logger logger = LoggerFactory.getLogger(CustomMenuService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomMenuService.class);
+
     @Autowired
     private GzhMenuMapper gzhMenuMapper;
 
@@ -128,33 +129,6 @@ public class CustomMenuService {
             level1MenuList.add(level1MenuModel);
         });
         return level1MenuList;
-    }
-
-    /**
-     * 创建公众号菜单
-     * @param jsonObject 自定义菜单数据
-     * @param accessToken 令牌
-     * @return
-     */
-    public Object createCustomMenu(JSONObject jsonObject, String gzhAppid, String accessToken) {
-        // 发起请求
-        String url = String.format(WechatUrlConst.CREATE_MENU , accessToken);
-        HttpClientResult httpClientResult = HttpUtil.post(url, jsonObject.toJSONString());
-
-        // 处理响应结果
-        if (SystemConst.SUCCES_CODE .equals(httpClientResult.getCode()) && StrUtil.isNotBlank(httpClientResult.getData())){
-            JSONObject  response = JSON.parseObject(httpClientResult.getData());
-            String errcode = response.getString(WxCommonConst.ERRCODE);
-            String errmsg = response.getString(WxCommonConst.ERRMSG);
-            if(! SystemConst.ZERO .equals(errcode)){
-                logger.error("创建菜单失败:::appid={},errMsg={}" ,gzhAppid, errmsg);
-                return ResponseUtil.resultFail(errcode,errmsg);
-            }else {
-                return ResponseUtil.resultSuccess(errmsg);
-            }
-        }else{
-            return ResponseUtil.resultFail(ErrCode.SYSTEM_INTERNAL_ERROR);
-        }
     }
 }
 

@@ -14,7 +14,7 @@ import java.text.NumberFormat;
  * @Date 2020/1/28
  */
 public class ConvertUtil {
-    private final static Logger logger = LoggerFactory.getLogger(ConvertUtil.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ConvertUtil.class);
 
     /**
      * Object转String
@@ -59,7 +59,7 @@ public class ConvertUtil {
                     String text = (String) obj;
                     return NumberFormat.getInstance().parse(text);
                 } catch (Exception e) {
-                    logger.info(ExceptionUtils.getStackTrace(e));
+                    LOGGER.info(ExceptionUtils.getStackTrace(e));
                 }
             }
         }

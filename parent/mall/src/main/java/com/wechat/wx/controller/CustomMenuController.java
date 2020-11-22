@@ -5,11 +5,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.wechat.model.ErrCode;
 import com.wechat.model.ResponseUtil;
 import com.wechat.tool.ObjectUtil;
+import com.wechat.tool.RedisUtil;
 import com.wechat.wx.model.Level1MenuModel;
 import com.wechat.wx.model.RedisKeyConst;
 import com.wechat.wx.service.CustomMenuService;
+import com.wechat.wx.service.WxInterfaceCallService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,7 +28,9 @@ public class CustomMenuController {
     @Autowired
     private CustomMenuService customMenuService;
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private WxInterfaceCallService wxInterfaceCallService;
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 创建自定义菜单
@@ -40,7 +43,7 @@ public class CustomMenuController {
             return ResponseUtil.resultFail(ErrCode.MISSING_REQUEST_PARAMETERS);
         }
         // 获取accessToken
-        String accessToken = stringRedisTemplate.opsForValue().get(RedisKeyConst.TOKEN + gzhAppid);
+        String accessToken = redisUtil.get(RedisKeyConst.TOKEN + gzhAppid);
         if (ObjectUtil.isNull(accessToken)) {
             return ResponseUtil.resultFail(ErrCode.REQUEST_PARAMETER_ERROR);
         }
@@ -53,9 +56,7 @@ public class CustomMenuController {
         // 拼接请求参数，调创建菜单接口
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("button", buttonList);
-
-        return customMenuService.createCustomMenu(jsonObject, gzhAppid, accessToken);
+        return wxInterfaceCallService.createCustomMenu(jsonObject, gzhAppid, accessToken);
 
     }
-
 }

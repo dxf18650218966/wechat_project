@@ -32,4 +32,10 @@ public interface WechatUrlConst {
      * 创建公众号菜单
      */
     String CREATE_MENU = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%1$s";
+
+    /**
+     * 登录凭证校验
+     */
+    String JSCODE_2_SESSION = "https://api.weixin.qq.com/sns/jscode2session";
+
 }
