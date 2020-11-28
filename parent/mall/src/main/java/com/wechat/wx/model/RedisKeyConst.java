@@ -26,4 +26,13 @@ public interface RedisKeyConst {
      * （前缀 + 自动回复配置主键 ， 回复的消息）
      */
     String AUTO_REPLY_ID = "autoReplyId_";
+
+    /**
+     * 公众号、小程序配置信息相关
+     */
+    String GZH_APPID = "gzhAppId";
+    String GZH_APP_SECRET = "gzhAppSecret";
+    String XCX_APPID = "xcxAppId";
+    String XCX_APP_SECRET = "xcxAppSecret";
+    String PROJECT_NAME = "projectName";
 }

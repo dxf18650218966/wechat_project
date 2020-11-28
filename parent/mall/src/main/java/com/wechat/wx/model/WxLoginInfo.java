@@ -14,9 +14,9 @@ public class WxLoginInfo implements Serializable {
     private static final long serialVersionUID = 6914943231897981594L;
 
     /**
-     * 小程序appid
+     * 项目id
      */
-    private String appid;
+    private String projectId;
 
     /**
      * 会话令牌， 如果有传入该值，说明session_key 已过期，前端需要重新登录，会产生新的session_token，那么之前的session_token 需要清理
@@ -28,23 +28,23 @@ public class WxLoginInfo implements Serializable {
      */
     private WxUserInfo wxUserInfo;
 
-    /**
+/*    *//**
      * 不包括敏感信息的原始数据字符串，用于计算签名
-     */
+     *//*
     private String rawData;
 
-    /**
+    *//**
      * 使用 sha1( rawData + sessionkey ) 得到字符串，用于校验用户信息
-     */
-    private String signature;
+     *//*
+    private String signature;*/
 
     /**
-     * 包括敏感数据在内的完整用户信息的加密数据
+     * 包括敏感数据在内的完整用户信息的加密数据 (前端获取手机号传递的加密数据)
      */
     private String encryptedData;
 
     /**
-     * 加密算法的初始向量
+     * 加密算法的初始向量 （手机号）
      */
     private String iv;
 

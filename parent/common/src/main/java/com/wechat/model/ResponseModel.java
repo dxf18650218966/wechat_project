@@ -1,6 +1,7 @@
 package com.wechat.model;
 
-import lombok.Data; 
+import com.wechat.constant.SystemConst;
+import lombok.Data;
 import java.io.Serializable;
 
 /**
@@ -71,4 +72,5 @@ public class ResponseModel implements Serializable {
         this.resultCode = resultCode;
         this.data = data;
     }
+
 }

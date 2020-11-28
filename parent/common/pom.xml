@@ -13,6 +13,12 @@
 
 
     <dependencies>
+        <!--java 目前只支持PKCS5Padding，要支持PKCS7Padding需要额外添加依赖-->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-ext-jdk16</artifactId>
+            <version>1.46</version>
+        </dependency>
     </dependencies>
 
 </project>

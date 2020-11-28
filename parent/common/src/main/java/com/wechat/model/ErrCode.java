@@ -26,10 +26,17 @@ public enum ErrCode {
     IMG_UPLOAD_FAILED("1006","img upload failed !"),
 
     // 文件上传失败
-    FILE_UPLOAD_FAILED("1007","file upload failed !");
+    FILE_UPLOAD_FAILED("1007","file upload failed !"),
+
+    // 第三方接口异常
+    THIRD_PARTY_INTERFACE_ERR("1010","Third party interface exception !"),
+
+    // 手机号码为空
+    CELL_PHONE_NUMBER_IS_EMPTY("1010","cell phone number is empty !");
 
 
     // ------------ 2000 业务提示 ------------
+
 
     private String errCode;
     private String errMsg;

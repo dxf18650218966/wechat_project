@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,9 +17,12 @@ public class RedisUtil {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    public void set(String key , String value){
+    // -----------------------------------  String 操作类型  ----------------------------------------
+
+    public void set(String key, String value){
         stringRedisTemplate.opsForValue().set(key, value);
     }
+
 
     /**
      * 设置有效期
@@ -27,24 +31,33 @@ public class RedisUtil {
      * @param timeout 有效时间
      * @param timeUnit 单位
      */
-    public void set(String key , String value, long timeout, TimeUnit timeUnit){
+    public void set(String key, String value, long timeout, TimeUnit timeUnit){
         stringRedisTemplate.opsForValue().set(key, value, timeout, timeUnit);
     }
 
-
-    /**
-     * 通过 key 获取 value
-     */
     public String get(String key){
         return stringRedisTemplate.opsForValue().get(key);
     }
 
-    /**
-     * 通过 key 删除键值对
-     * @return successful 返回 true
-     */
     public boolean del(String key){
         return stringRedisTemplate.delete(key);
+    }
+
+    // -------------------------------------  Hash 操作类型  ----------------------------------
+
+    public void set(String key, Object hashKey, Object value){
+        stringRedisTemplate.opsForHash().put(key, hashKey, value);
+    }
+
+    public void set(String key, Map<Object, Object> map){
+        stringRedisTemplate.opsForHash().putAll(key, map);
+    }
+
+    public Object get(String key, Object hashKey){
+       return stringRedisTemplate.opsForHash().get(key, hashKey);
+    }
+    public String get(String key, String hashKey){
+        return (String) stringRedisTemplate.opsForHash().get(key, hashKey);
     }
 
 

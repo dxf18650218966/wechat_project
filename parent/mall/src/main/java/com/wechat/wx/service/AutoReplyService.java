@@ -12,7 +12,6 @@ import com.wechat.wx.model.RedisKeyConst;
 import com.wechat.wx.model.WxCommonConst;
 import com.wechat.wx.util.MaterialImgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

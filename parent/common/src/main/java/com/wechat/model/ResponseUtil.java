@@ -42,7 +42,7 @@ public class ResponseUtil {
     }
 
     /**
-     * 通讯成功但业务结果失败
+     * 通讯成功 but 业务结果失败
      * @param errCode 错误码
      * @param errCodeDes 错误描述
      * @return
@@ -52,7 +52,7 @@ public class ResponseUtil {
     }
 
     /**
-     * 通讯成功并且业务结果成功
+     * 通讯成功 and 业务结果成功
      * @param obj 返回数据
      * @return
      *     returnCode : SUCCESS
@@ -62,5 +62,15 @@ public class ResponseUtil {
      */
     public static ResponseModel resultSuccess(Object obj){
         return new ResponseModel( SystemConst.SUCCESS , SystemConst.OK , SystemConst.SUCCESS , obj);
+    }
+
+
+    /**
+     * 判断通讯和业务是否成功
+     * @param responseModel  返回值模型
+     * @return 都成功返回true
+     */
+    public static Boolean businessResult(ResponseModel responseModel){
+        return SystemConst.SUCCESS .equals(responseModel.getResultCode()) && SystemConst.SUCCESS .equals(responseModel.getResultCode());
     }
 }

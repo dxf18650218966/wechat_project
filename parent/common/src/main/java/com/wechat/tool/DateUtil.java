@@ -151,11 +151,11 @@ public class DateUtil {
 
     //时间戳 (13位)
     public static long getTimeStamp13(){
-        return  System.currentTimeMillis();//13位时间戳
+        return  System.currentTimeMillis();
     }
     //时间戳 (10位)
     public static long getTimeStamp10(){
-        return System.currentTimeMillis()/1000;//10位时间戳
+        return System.currentTimeMillis()/1000;
     }
 
     /**
