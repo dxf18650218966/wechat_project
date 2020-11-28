@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.wx.mapper.UserInfoMapper"><!--用户信息-->
+
+    <!--通过手机号码查询卡号-->
+    <select id="selectCardIdByPhone" resultType="java.lang.String">
+        select card_id from user_info where phone = #{phone}
+    </select>
+</mapper>
