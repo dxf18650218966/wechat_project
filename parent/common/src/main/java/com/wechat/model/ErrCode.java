@@ -31,11 +31,13 @@ public enum ErrCode {
     // 第三方接口异常
     THIRD_PARTY_INTERFACE_ERR("1010","Third party interface exception !"),
 
-    // 手机号码为空
-    CELL_PHONE_NUMBER_IS_EMPTY("1010","cell phone number is empty !");
-
 
     // ------------ 2000 业务提示 ------------
+    // 手机号码为空
+    CELL_PHONE_NUMBER_IS_EMPTY("2000","cell phone number is empty !"),
+
+    //  校验验证码错误
+    VERIFY_COD_ERROR("2001","verify code error !");
 
 
     private String errCode;

@@ -45,3 +45,14 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
     call-setters-on-nulls: true
+
+#----------- 阿里大鱼 -------------
+aliyun:
+  access-key-id: LTAI4GCtnWm4mPu8T2PPr4JN
+  access-key-secret: UbS4l8Ni9G8glkCTfcGpO5CoM52Gsh
+  # 签名
+  sign-name: 零悦mall
+  # 验证码模板
+  code-templateI-id: SMS_182674403
+  # 短信通知模板
+  message-template-id: SMS_182679347

@@ -105,7 +105,7 @@ public class ValidatorUtil {
      * @param phone
      * @return true：格式正确
      */
-    public boolean isValidPhone(String phone){
+    public static boolean isValidPhone(String phone){
         if(ObjectUtil.isNull(phone)){
             return false;
         }

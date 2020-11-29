@@ -11,17 +11,17 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @Author dai
  * @Date 2020/10/31
  */
-@MapperScan("com.wx.**.mapper")
-@EnableScheduling //开启定时任务
+@MapperScan("com.wechat.**.mapper")
+@EnableScheduling
 @SpringBootApplication
-public class thirdpartyApplication extends SpringBootServletInitializer {
+public class ThirdpartyApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication.run(thirdpartyApplication.class, args);
+        SpringApplication.run(ThirdpartyApplication.class, args);
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(thirdpartyApplication.class);
+        return application.sources(ThirdpartyApplication.class);
     }
 }
