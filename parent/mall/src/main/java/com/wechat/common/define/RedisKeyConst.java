@@ -1,4 +1,6 @@
-package com.wechat.wx.model;
+package com.wechat.common.define;
+
+import com.alibaba.fastjson.JSON;
 
 /**
  * redis key前缀
@@ -30,9 +32,21 @@ public interface RedisKeyConst {
     /**
      * 公众号、小程序配置信息相关
      */
-    String GZH_APPID = "gzhAppId";
-    String GZH_APP_SECRET = "gzhAppSecret";
-    String XCX_APPID = "xcxAppId";
-    String XCX_APP_SECRET = "xcxAppSecret";
-    String PROJECT_NAME = "projectName";
+    String GZH_APPID  = "gzhAppId";
+    String GZH_APP_SECRET  = "gzhAppSecret";
+    String XCX_APPID  = "xcxAppId";
+    String XCX_APP_SECRET  = "xcxAppSecret";
+    String PROJECT_NAME  = "projectName";
+
+    /**
+     * 用户信息(hash结构)
+     * key : cardid 卡号
+     * hash_key: user_info 用户信息
+     * hash_key：balance 余额
+     * hash_key：integral 积分
+     */
+    String CARD_ID  = "cardid";
+    String USER_INFO = "user_info";
+    String BALANCE = "balance";
+    String INTEGRAL = "integral";
 }

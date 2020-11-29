@@ -30,7 +30,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author dai
@@ -54,9 +56,14 @@ public class redisTest {
     @Test
     public void test() throws Exception{
 
+        HashMap<String, Object> objectObjectHashMap = new HashMap<>(16);
+        objectObjectHashMap.put("aaa","bbb");
+        objectObjectHashMap.put("aaa","bbb");
+        objectObjectHashMap.put("ccc","ccc");
+        redisUtil.set("aaaaa",objectObjectHashMap);
 
-
-        Console.log(UUID.randomUUID().toString());
+        redisTemplate.expire("aaaaa",3, TimeUnit.MINUTES);
+        Console.log( redisTemplate.opsForValue().getOperations().getExpire("aaaaa"));
 
     }
 

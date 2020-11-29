@@ -8,7 +8,7 @@ import com.wechat.model.ResponseUtil;
 import com.wechat.tool.RandomUtil;
 import com.wechat.tool.RedisUtil;
 import com.wechat.wx.entity.UserInfoBean;
-import com.wechat.wx.model.RedisKeyConst;
+import com.wechat.common.define.RedisKeyConst;
 import com.wechat.wx.model.WxLoginInfo;
 import com.wechat.wx.model.WxUserInfo;
 import com.wechat.wx.service.LoginService;
@@ -119,7 +119,7 @@ public class LoginController {
         userInfoBean.setHeadPortrait(wxUserInfo.getAvatarUrl());
         userInfoBean.setGender(wxUserInfo.getGender());
 
-        // 通过手机号，判断用户是否已注册过
+        // 通过手机号，判断用户是否已注册过  (清除用户信息缓存)
         Boolean res = false;
         Boolean bool = loginService.existsUserByPhone(phoneNumber);
         if(bool){
@@ -199,7 +199,7 @@ public class LoginController {
             return ResponseUtil.returnFail( ErrCode.THIRD_PARTY_INTERFACE_ERR );
         }
 
-        //  通过openId 判断用户是否已注册
+        //  通过openId 判断用户是否已注册 (清除用户信息缓存)
         Boolean res = false;
         Boolean bool = loginService.existsUserByOpenId(openid);
         if(! bool &&  StrUtil.isBlank(phone)){

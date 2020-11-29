@@ -3,14 +3,16 @@ package com.wechat.wx.service;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.wechat.common.define.RedisKeyConst;
 import com.wechat.crypto.AESUtils;
 import com.wechat.tool.DateUtil;
 import com.wechat.tool.RandomUtil;
+import com.wechat.tool.RedisUtil;
 import com.wechat.wx.entity.UserAccountBean;
 import com.wechat.wx.entity.UserInfoBean;
 import com.wechat.wx.mapper.UserAccountMapper;
 import com.wechat.wx.mapper.UserInfoMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,8 @@ public class LoginService {
     private UserInfoMapper userInfoMapper;
     @Autowired
     private UserAccountMapper userAccountMapper;
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 小程序获取手机号
@@ -61,7 +65,12 @@ public class LoginService {
      */
     public Boolean existsUserByPhone(String phoneNumber) {
         String cardId = userInfoMapper.selectCardIdByPhone(phoneNumber);
-        return StrUtil.isBlank(cardId) ? false : true;
+        if(StrUtil.isBlank(cardId)){
+            return false;
+        }
+        // 清用户缓存
+        redisUtil.del(RedisKeyConst.CARD_ID + cardId);
+        return true;
     }
 
     /**
@@ -71,7 +80,12 @@ public class LoginService {
      */
     public Boolean existsUserByOpenId(String openId) {
         String cardId = userInfoMapper.selectCardIdByOpenId(openId);
-        return StrUtil.isBlank(cardId) ? false : true;
+        if(StrUtil.isBlank(cardId)){
+            return false;
+        }
+        // 清用户缓存
+        redisUtil.del(RedisKeyConst.CARD_ID + cardId);
+        return true;
     }
 
     /**

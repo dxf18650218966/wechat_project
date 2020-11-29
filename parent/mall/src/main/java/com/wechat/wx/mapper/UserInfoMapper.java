@@ -19,7 +19,6 @@ public interface UserInfoMapper extends BaseMapper<UserInfoBean> {
      */
     String selectCardIdByPhone(String phone);
 
-
     /**
      * 通过公众号openId查询卡号
      * @param openId 公众号openId

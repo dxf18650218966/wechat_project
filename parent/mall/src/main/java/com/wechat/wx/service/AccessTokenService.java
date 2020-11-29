@@ -5,7 +5,7 @@ import com.wechat.wx.entity.GzhInfoBean;
 import com.wechat.wx.entity.XcxInfoBean;
 import com.wechat.wx.mapper.GzhInfoMapper;
 import com.wechat.wx.mapper.XcxInfoMapper;
-import com.wechat.wx.model.RedisKeyConst;
+import com.wechat.common.define.RedisKeyConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -58,7 +58,7 @@ public class AccessTokenService implements ApplicationRunner {
                 wxInterfaceCallService.gzhAccessToken(gzhInfo.getAppId(), gzhInfo.getAppSecret(), gzhInfo.getOriginalId());
 
                 // 存入缓存，便于操作 ( key:项目)
-                HashMap<Object, Object> hash = new HashMap<>(16);
+                HashMap<String, Object> hash = new HashMap<>(16);
                 hash.put(RedisKeyConst.GZH_APPID , gzhInfo.getAppId());
                 hash.put(RedisKeyConst.GZH_APP_SECRET , gzhInfo.getAppSecret());
                 hash.put(RedisKeyConst.PROJECT_NAME , gzhInfo.getProjectName());
@@ -73,7 +73,7 @@ public class AccessTokenService implements ApplicationRunner {
                 wxInterfaceCallService.xcxAccessToken(xcxInfo.getAppId(), xcxInfo.getAppSecret());
 
                 // 存入缓存，便于操作
-                HashMap<Object, Object> hash = new HashMap<>(16);
+                HashMap<String, Object> hash = new HashMap<>(16);
                 hash.put(RedisKeyConst.XCX_APPID , xcxInfo.getAppId());
                 hash.put(RedisKeyConst.XCX_APP_SECRET , xcxInfo.getAppSecret());
                 hash.put(RedisKeyConst.PROJECT_NAME , xcxInfo.getProjectName());

@@ -12,4 +12,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public interface UserAccountMapper extends BaseMapper<UserAccountBean> {
+    /**
+     * 查询账户信息
+     * @param cardId
+     * @return
+     */
+    UserAccountBean selectByCardId(String cardId);
+
+    int updateByCardId(UserAccountBean userAccountBean);
+
+
 }

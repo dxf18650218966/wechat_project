@@ -7,7 +7,7 @@ import com.wechat.model.ResponseUtil;
 import com.wechat.tool.ObjectUtil;
 import com.wechat.tool.RedisUtil;
 import com.wechat.wx.model.Level1MenuModel;
-import com.wechat.wx.model.RedisKeyConst;
+import com.wechat.common.define.RedisKeyConst;
 import com.wechat.wx.service.CustomMenuService;
 import com.wechat.wx.service.WxInterfaceCallService;
 import org.springframework.beans.factory.annotation.Autowired;

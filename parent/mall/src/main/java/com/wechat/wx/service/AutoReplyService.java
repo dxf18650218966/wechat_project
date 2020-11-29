@@ -8,7 +8,7 @@ import com.wechat.tool.RedisUtil;
 import com.wechat.tool.XmlConvertUtil;
 import com.wechat.wx.entity.AutoReplyBean;
 import com.wechat.wx.mapper.AutoReplyMapper;
-import com.wechat.wx.model.RedisKeyConst;
+import com.wechat.common.define.RedisKeyConst;
 import com.wechat.wx.model.WxCommonConst;
 import com.wechat.wx.util.MaterialImgUtil;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wechat.wx.entity.SysFileBean;
 import com.wechat.wx.mapper.SysFileMapper;
-import com.wechat.wx.model.RedisKeyConst;
+import com.wechat.common.define.RedisKeyConst;
 import com.wechat.wx.model.WechatUrlConst;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;

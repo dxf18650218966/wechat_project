@@ -1,5 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wechat.wx.mapper.UserAccountMapper"><!--用户账户信息-->
+    <resultMap id="BaseResultMap" type="com.wechat.wx.entity.UserAccountBean">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="card_id" jdbcType="VARCHAR" property="cardId"/>
+        <result column="integral" jdbcType="NUMERIC" property="integral"/>
+        <result column="balance" jdbcType="NUMERIC" property="balance"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="without_code" jdbcType="VARCHAR" property="withoutCode"/>
+        <result column="without_code_name" jdbcType="VARCHAR" property="withoutCodeName"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, card_id, integral, balance, password, without_code, without_code_name, phone
+    </sql>
 
+    <select id="selectByCardId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_account
+        where card_id = #{cardId,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateByCardId" parameterType="com.wechat.wx.entity.UserAccountBean">
+        update user_account
+        <set>
+            <if test="integral != null">
+                integral = #{integral,jdbcType=NUMERIC},
+            </if>
+            <if test="balance != null">
+                balance = #{balance,jdbcType=NUMERIC},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="withoutCode != null">
+                without_code = #{withoutCode,jdbcType=VARCHAR},
+            </if>
+            <if test="withoutCodeName != null">
+                without_code_name = #{withoutCodeName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where card_id = #{cardId,jdbcType=VARCHAR}
+    </update>
 </mapper>

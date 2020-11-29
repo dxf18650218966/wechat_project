@@ -10,7 +10,7 @@ import com.wechat.model.ResponseModel;
 import com.wechat.model.ResponseUtil;
 import com.wechat.tool.HttpUtil;
 import com.wechat.tool.RedisUtil;
-import com.wechat.wx.model.RedisKeyConst;
+import com.wechat.common.define.RedisKeyConst;
 import com.wechat.wx.model.WechatUrlConst;
 import com.wechat.wx.model.WxCommonConst;
 import org.slf4j.Logger;

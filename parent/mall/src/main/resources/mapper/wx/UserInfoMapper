@@ -3,7 +3,6 @@
 <mapper namespace="com.wechat.wx.mapper.UserInfoMapper"><!--用户信息-->
     <resultMap id="BaseResultMap" type="com.wechat.wx.entity.UserInfoBean">
         <id column="id" jdbcType="VARCHAR" property="id" />
-        <result column="foreign_key" jdbcType="VARCHAR" property="foreignKey" />
         <result column="project" jdbcType="VARCHAR" property="project" />
         <result column="project_name" jdbcType="VARCHAR" property="projectName" />
         <result column="registration_time" jdbcType="TIMESTAMP" property="registrationTime" />
@@ -21,8 +20,8 @@
         <result column="head_portrait" jdbcType="VARCHAR" property="headPortrait" />
     </resultMap>
     <sql id="Base_Column_List">
-        id, foreign_key, project, project_name, registration_time, gzh_open_id, xcx_open_id,
-        card_id, phone, "name", nickname, gender, gender_name, birthday, "level", level_name,
+        id, project, project_name, registration_time, gzh_open_id, xcx_open_id,
+        card_id, phone, name, nickname, gender, gender_name, birthday, level, level_name,
         head_portrait
     </sql>
     <select id="selectByCardId" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -52,7 +51,7 @@
                 xcx_open_id = #{xcxOpenId,jdbcType=VARCHAR},
             </if>
             <if test="name != null">
-                "name" = #{name,jdbcType=VARCHAR},
+                name = #{name,jdbcType=VARCHAR},
             </if>
             <if test="nickname != null">
                 nickname = #{nickname,jdbcType=VARCHAR},
@@ -67,7 +66,7 @@
                 birthday = #{birthday,jdbcType=TIMESTAMP},
             </if>
             <if test="level != null">
-                "level" = #{level,jdbcType=VARCHAR},
+                level = #{level,jdbcType=VARCHAR},
             </if>
             <if test="levelName != null">
                 level_name = #{levelName,jdbcType=VARCHAR},
