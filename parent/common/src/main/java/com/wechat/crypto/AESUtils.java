@@ -97,7 +97,7 @@ public class AESUtils {
         try {
             Cipher cipher = Cipher.getInstance(ALGORITHM );
             SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(UTF8 ), AES );
-            AlgorithmParameterSpec paramSpec = new IvParameterSpec(iv.getBytes());
+            AlgorithmParameterSpec paramSpec = new IvParameterSpec(iv.getBytes(UTF8));
             cipher.init(Cipher.DECRYPT_MODE , keySpec, paramSpec);
             return new String(cipher.doFinal(Base64.decodeBase64(ciphertext)), UTF8 );
         } catch (Exception e) {

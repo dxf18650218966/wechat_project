@@ -37,7 +37,7 @@ public interface WechatUrlConst {
     /**
      * access_token：网页授权接口调用凭证（用户）
      */
-    String OAUTH_ACCESS_TOKEN= " https://api.weixin.qq.com/sns/oauth2/access_token";
+    String OAUTH_ACCESS_TOKEN= "https://api.weixin.qq.com/sns/oauth2/access_token";
 
     /**
      * 公众号拉取用户信息

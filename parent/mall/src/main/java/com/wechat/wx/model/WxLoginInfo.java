@@ -28,16 +28,6 @@ public class WxLoginInfo implements Serializable {
      */
     private WxUserInfo wxUserInfo;
 
-/*    *//**
-     * 不包括敏感信息的原始数据字符串，用于计算签名
-     *//*
-    private String rawData;
-
-    *//**
-     * 使用 sha1( rawData + sessionkey ) 得到字符串，用于校验用户信息
-     *//*
-    private String signature;*/
-
     /**
      * 包括敏感数据在内的完整用户信息的加密数据 (前端获取手机号传递的加密数据)
      */

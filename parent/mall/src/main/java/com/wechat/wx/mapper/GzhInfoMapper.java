@@ -1,5 +1,6 @@
 package com.wechat.wx.mapper;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wechat.wx.entity.GzhInfoBean;
 import org.springframework.stereotype.Component;
@@ -11,5 +12,6 @@ import org.springframework.stereotype.Component;
  * @date 2020/11/3 22:39
  */
 @Component
+@TableName("gzh_info")
 public interface GzhInfoMapper extends BaseMapper<GzhInfoBean> {
 }

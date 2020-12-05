@@ -1,7 +1,10 @@
 package com.wechat.wx.controller;
 
+import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.wechat.crypto.AESUtils;
+import com.wechat.model.BusinessCode;
 import com.wechat.model.ErrCode;
 import com.wechat.model.ResponseModel;
 import com.wechat.model.ResponseUtil;
@@ -19,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Struct;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @CrossOrigin
-@RequestMapping("wechat/login")
+@RequestMapping("wx/login")
 public class LoginController {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
@@ -47,15 +51,15 @@ public class LoginController {
      *    前端：
      *         1：通过 wx.checkSession 判断会话秘钥 session_key 是否过期，如果过期重新调用此接口登录，并且把已经失效的session_token传递给后端清除
      *         2：首先通过 wx.login 获取 code 用户登录凭证（有效期五分钟）
-     *         3：wx.getUserInfo 获取微信授权，得到用户信息，不包含 openid 等敏感信息，
+     *         3：wx.getUserInfo 获取微信授权，得到用户信息和手机号，不包含 openid 等敏感信息
      *         4：调后台登录服务
      *    后端：
-     *         1：通过 appid + appsecret + code 调用微信登录凭证，获取到 session_key（会话秘钥） + openid等
+     *         1：通过 appid + appsecret + code 调用微信登录凭证，获取到 session_key（会话秘钥）、 openid（用户唯一标识）、unionid(用户唯一标识) 等
      *         2：获取手机号 (因为没有UnionID ，只能通过手机号关联)
      *         3：自定义登录状态 session_token，有效期为7天，
-     *           由于微信是根据用户活跃度来续签 session_key 有效期，所以无法知道 session_key 的过期时间，只能在初始化首页时，有效期再续上7天，
-     *           之所以给session_token 设置有效期，是为避免用户登录之后，再也不登录了，导致session_token 一直在缓存
-     *          （session_token , session_key + openid） , session_token = MD5(session_key + openid) + 6位随机数
+     *           由于微信是根据用户活跃度来续签 session_key 有效期，所以无法知道 session_key 的过期时间，只能在用户再次登录小程序时延长有效期
+     *           之所以给session_token 设置有效期，是为避免用户登录之后，再也不登录了，导致 session_token 一直保存在缓存
+     *          （session_token , session_key + openid） , session_token：UUID
      *         4: 添加用户数据: 已注册过的用户，只需要更新用户信息，返回session_token
      *
      * @param wxLoginInfo
@@ -68,11 +72,9 @@ public class LoginController {
         String code = wxLoginInfo.getCode();
         String encryptedData = wxLoginInfo.getEncryptedData();
         String iv = wxLoginInfo.getIv();
-/*        String rawData = wxLoginInfo.getRawData();
-        String signature = wxLoginInfo.getSignature();*/
         String oldSessionToken = wxLoginInfo.getSession_token();
         WxUserInfo wxUserInfo = wxLoginInfo.getWxUserInfo();
-        if(! StrUtil.isAllNotBlank( projectId, code, encryptedData, iv /*rawData, signature*/) || wxUserInfo == null){
+        if(! StrUtil.isAllNotBlank( projectId, code, encryptedData, iv) || wxUserInfo == null){
             return ResponseUtil.returnFail( ErrCode.MISSING_REQUEST_PARAMETERS );
         }
 
@@ -83,18 +85,18 @@ public class LoginController {
             return ResponseUtil.returnFail( ErrCode.REQUEST_PARAMETER_ERROR );
         }
 
-        // 会话令牌， 如果有传入该值，说明session_key 已过期，前端需要重新登录，那会产生新的session_token，那么之前的session_token 需要清理掉
-        redisUtil.del(oldSessionToken);
+        // 会话令牌， 如果有传入该值，说明session_key 已过期，前端需要重新登录，产生新的session_token，那么之前的session_token 需要清理掉
+        if(StrUtil.isNotBlank(oldSessionToken)){
+            redisUtil.del(oldSessionToken);
+        }
 
-        // 通过 appid + appsecret + code 调用微信登录凭证校验接口，获取到 session_key（会话秘钥） + openid等
+        // 通过 appid + appsecret + code 调用微信登录凭证校验接口，获取到 session_key（会话秘钥） + openid(用户唯一标识)等
         ResponseModel responseModel = wxInterfaceCallServicel.jscode2session(appid, appSecret, code);
         if(! ResponseUtil.businessResult(responseModel)) {
             return responseModel;
         }
         JSONObject json = (JSONObject) JSONObject.toJSON(responseModel.getData());
-        //用户唯一标识
         String openid = json.getString("openid");
-        //	会话密钥
         String sessionKey = json.getString("session_key");
         if(! StrUtil.isAllNotBlank(openid, sessionKey)){
             return ResponseUtil.returnFail( ErrCode.THIRD_PARTY_INTERFACE_ERR );
@@ -106,11 +108,6 @@ public class LoginController {
             return ResponseUtil.returnFail( ErrCode.CELL_PHONE_NUMBER_IS_EMPTY );
         }
 
-        // 自定义登录状态 session_token，有效期7天
-        String value = sessionKey + openid;
-        String sessionToken = RandomUtil.ensureNoRiskAtAll();
-        redisUtil.set(sessionToken, value, 7, TimeUnit.DAYS);
-
         // 用户信息
         UserInfoBean userInfoBean = new UserInfoBean();
         userInfoBean.setXcxOpenId(openid);
@@ -121,9 +118,10 @@ public class LoginController {
 
         // 通过手机号，判断用户是否已注册过  (清除用户信息缓存)
         Boolean res = false;
-        Boolean bool = loginService.existsUserByPhone(phoneNumber);
-        if(bool){
+        String cardId = loginService.existsUserByPhone(projectId, phoneNumber);
+        if(StrUtil.isNotBlank(cardId)){
             // 更新用户信息
+            userInfoBean.setCardId(cardId);
             res = loginService.updateUserInfo(userInfoBean);
         }else{
             // 注册用户信息
@@ -132,11 +130,17 @@ public class LoginController {
             res = loginService.registeredUserInfo(userInfoBean);
         }
 
-        // 响应前端
+        // 登录成功
         if (res){
+            // 自定义登录状态 session_token，有效期7天
+            String value = sessionKey + openid;
+            String sessionToken = RandomUtil.ensureNoRiskAtAll();
+            redisUtil.set(sessionToken, value, 7, TimeUnit.DAYS);
+
+            // 响应前端
             JSONObject response = new JSONObject();
             response.put("session_token", sessionToken);
-            response.put("card_id", userInfoBean.getCardId());
+            response.put("card_id", StrUtil.isNotBlank(cardId) ? cardId : userInfoBean.getCardId());
             return ResponseUtil.resultSuccess(response);
         }
         return ResponseUtil.returnFail(ErrCode.SYSTEM_INTERNAL_ERROR );
@@ -144,7 +148,7 @@ public class LoginController {
 
 
     /**
-     * 小程序登录
+     * 公众号登录
      * 流程：
      *    前端：1：用户同意授权，获取code
      *          详情说明：公众号网页授权后，会重定向到回调链接地址redirect_uri，并带上code，
@@ -155,14 +159,14 @@ public class LoginController {
      *          4: 通过openId 判断用户是否已注册
      *                  已注册：更新会员
      *                  未注册：手机号必须传入（提示前端去注册页面）
-     *          5：自定义登录状态 session_token，有效期为7天，7天之内如果用户有再次进入首页，再延长7天有效期
+     *          5：自定义登录状态 session_token，有效期为7天
      *
      */
-    @PostMapping("gzh")
-    public Object gzh(@Validated @RequestBody HashMap<String,String> map){
+    @PostMapping("mp_login")
+    public Object mpLogin(@Validated @RequestBody HashMap<String,String> map){
         String projectId = map.get("project_id");
         String code = map.get("code");
-        String phone = map.get("phone");
+
         if(! StrUtil.isAllNotBlank( projectId, code)){
             return ResponseUtil.returnFail( ErrCode.MISSING_REQUEST_PARAMETERS );
         }
@@ -199,41 +203,101 @@ public class LoginController {
             return ResponseUtil.returnFail( ErrCode.THIRD_PARTY_INTERFACE_ERR );
         }
 
-        //  通过openId 判断用户是否已注册 (清除用户信息缓存)
-        Boolean res = false;
-        Boolean bool = loginService.existsUserByOpenId(openid);
-        if(! bool &&  StrUtil.isBlank(phone)){
-            return ResponseUtil.resultFail(ErrCode.CELL_PHONE_NUMBER_IS_EMPTY );
-        }
-
         // 用户信息
         UserInfoBean userInfoBean = new UserInfoBean();
         userInfoBean.setGzhOpenId(openid);
-        userInfoBean.setPhone(phone);
         userInfoBean.setNickname(nickname);
         userInfoBean.setHeadPortrait(headimgurl);
         userInfoBean.setGender(sex);
-        if(bool){
-            // 更新用户信息
-            res = loginService.updateUserInfo(userInfoBean);
-        }else{
-            // 注册用户信息(手机号必选)
-            userInfoBean.setProject(projectId);
-            userInfoBean.setProjectName(projectName);
-            res = loginService.registeredUserInfo(userInfoBean);
+        userInfoBean.setProject(projectId);
+        userInfoBean.setProjectName(projectName);
+
+        //  通过openId 判断用户是否已注册 (清除用户信息缓存)
+        String cardId = loginService.existsUserByOpenId(openid);
+        if(StrUtil.isBlank(cardId)){
+            // 跳转注册页面
+            JSONObject json = BusinessCode.json(BusinessCode.PLEASE_REGISTER );
+            Console.log(JSONObject.toJSONString(userInfoBean));
+            json.put("userInfo", AESUtils.encrypt(JSONObject.toJSONString(userInfoBean)));
+            return ResponseUtil.resultSuccess(json);
         }
 
-        // 自定义登录状态 session_token，有效期7天
-        String sessionToken = RandomUtil.ensureNoRiskAtAll();
-        redisUtil.set(sessionToken, openid, 7, TimeUnit.DAYS);
-
-        // 响应前端
+        // 更新用户信息
+        userInfoBean.setCardId(cardId);
+        Boolean res = loginService.updateUserInfo(userInfoBean);
+        // 登录成功
         if (res){
+            // 自定义登录状态 session_token，有效期7天
+            String sessionToken = RandomUtil.ensureNoRiskAtAll();
+            redisUtil.set(sessionToken, openid, 7, TimeUnit.DAYS );
+
+            // 响应前端
             JSONObject response = new JSONObject();
+            response.put("code","2001");
             response.put("session_token", sessionToken);
             response.put("card_id", userInfoBean.getCardId());
             return ResponseUtil.resultSuccess(response);
         }
         return ResponseUtil.returnFail(ErrCode.SYSTEM_INTERNAL_ERROR );
+    }
+
+
+    /**
+     * 注册
+     * @param map
+     * @return
+     */
+    @PostMapping("mp_registered")
+    public Object mpRegistered(@Validated @RequestBody HashMap<String,String> map){
+        String userData = map.get("user_data");
+        String phoneCipher = map.get("phone");
+
+        if(! StrUtil.isAllNotBlank( userData, phoneCipher)){
+            return ResponseUtil.returnFail( ErrCode.MISSING_REQUEST_PARAMETERS );
+        }
+        // 解密
+        String phone = AESUtils.decrypt(phoneCipher);
+        String userInfo = AESUtils.decrypt(userData);
+        if(! StrUtil.isAllNotBlank( userData, phone)){
+            return ResponseUtil.returnFail( ErrCode.REQUEST_PARAMETER_ERROR );
+        }
+        UserInfoBean userInfoBean = JSONObject.parseObject(userInfo, UserInfoBean.class);
+        userInfoBean.setPhone(phone);
+
+
+        // 通过手机号，判断用户是否已注册过  (清除用户信息缓存)
+        Boolean res = false;
+        String cardId = loginService.existsUserByPhone(userInfoBean.getProject(), phone);
+        if(StrUtil.isNotBlank(cardId)){
+            // 更新用户信息
+            userInfoBean.setCardId(cardId);
+            res = loginService.updateUserInfo(userInfoBean);
+        }else{
+            // 注册用户信息
+            res = loginService.registeredUserInfo(userInfoBean);
+        }
+        if(res){
+            // 自定义登录状态 session_token，有效期7天
+            String sessionToken = RandomUtil.ensureNoRiskAtAll();
+            redisUtil.set(sessionToken, userInfoBean.getGzhOpenId(), 7, TimeUnit.DAYS );
+
+            // 响应前端
+            JSONObject response = new JSONObject();
+            response.put("session_token", sessionToken);
+            response.put("card_id", userInfoBean.getCardId());
+            return ResponseUtil.resultSuccess(response);
+        }
+        return ResponseUtil.returnFail( ErrCode.SYSTEM_INTERNAL_ERROR );
+    }
+
+    /**
+     * 校验小程序sessionToken是否过期
+     * @param map
+     * @return true 没过期
+     */
+    @PostMapping("check_token")
+    public Object checkToken(@Validated @RequestBody HashMap<String,String> map){
+        String token = redisUtil.get(map.get("session_token"));
+        return ResponseUtil.resultSuccess(StrUtil.isBlank(token) ? false : true);
     }
 }

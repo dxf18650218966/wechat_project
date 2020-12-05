@@ -33,23 +33,17 @@
 
     <!-- 通过手机号码查询卡号 -->
     <select id="selectCardIdByPhone" resultType="java.lang.String">
-        select card_id from user_info where phone = #{phone}
+        select card_id from user_info where project = #{projectId} and phone = #{phone}
     </select>
    <!-- 通过公众号openId查询卡号 -->
     <select id="selectCardIdByOpenId" resultType="java.lang.String">
         select card_id from user_info where gzh_open_id = #{phone}
     </select>
 
-    <!--通过手机号更新会员信息-->
-    <update id="updateByPhoneNumber" parameterType="com.wechat.wx.entity.UserInfoBean">
+    <!--通过 OpenId 更新会员信息-->
+    <update id="updateByOpenId" parameterType="com.wechat.wx.entity.UserInfoBean">
         update user_info
         <set>
-            <if test="gzhOpenId != null">
-                gzh_open_id = #{gzhOpenId,jdbcType=VARCHAR},
-            </if>
-            <if test="xcxOpenId != null">
-                xcx_open_id = #{xcxOpenId,jdbcType=VARCHAR},
-            </if>
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
@@ -75,6 +69,6 @@
                 head_portrait = #{headPortrait,jdbcType=VARCHAR},
             </if>
         </set>
-        where phone = #{phone,jdbcType=VARCHAR}
+        where  card_id = #{cardId,jdbcType=VARCHAR}
     </update>
 </mapper>

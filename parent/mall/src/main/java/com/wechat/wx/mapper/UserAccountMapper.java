@@ -1,5 +1,6 @@
 package com.wechat.wx.mapper;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wechat.wx.entity.UserAccountBean;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
  * @date 2020/11/26 21:22
  */
 @Component
+@TableName("user_account")
 public interface UserAccountMapper extends BaseMapper<UserAccountBean> {
     /**
      * 查询账户信息

@@ -1,5 +1,6 @@
 package com.wechat.wx.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
  * @Date 2020/11/1
  */
 @Data
+@TableName("user_account")
 public class UserAccountBean implements Serializable {
   private static final long serialVersionUID = 3236682729441123746L;
   private String id;

@@ -1,6 +1,7 @@
 package com.wechat.sms.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.wechat.constant.BusinessMsgConst;
 import com.wechat.crypto.AESUtils;
 import com.wechat.model.ErrCode;
 import com.wechat.model.ResponseUtil;
@@ -38,10 +39,11 @@ public class AliyunSmsController {
         if(! StrUtil.isAllNotBlank(phone)){
             return ResponseUtil.returnFail( ErrCode.REQUEST_PARAMETER_ERROR );
         }
+
         // 发送短信
         boolean res = aliyunSmsServer.sendCode(phone);
         if(res){
-            return ResponseUtil.resultSuccess(null);
+            return ResponseUtil.resultSuccess( BusinessMsgConst.SEND_SUCCESS );
         }
         return ResponseUtil.resultFail( ErrCode.THIRD_PARTY_INTERFACE_ERR );
     }
@@ -57,7 +59,7 @@ public class AliyunSmsController {
             return ResponseUtil.returnFail( ErrCode.MISSING_REQUEST_PARAMETERS );
         }
         if(code.equals(redisUtil.get(phone))){
-            return ResponseUtil.resultSuccess(null);
+            return ResponseUtil.resultSuccess(BusinessMsgConst.CHECK_SUCCESS);
         }
         return ResponseUtil.resultFail(ErrCode.VERIFY_COD_ERROR );
     }

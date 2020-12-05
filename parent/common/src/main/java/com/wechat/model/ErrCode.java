@@ -6,7 +6,7 @@ package com.wechat.model;
  * @Date 2020/1/10
  */
 public enum ErrCode {
-    // ------------ 1000 是代码问题提示            2000是业务提示 ----------------
+    // ------------  通讯失败、业务失败，错误码 ---------
     // 缺少请求参数
     MISSING_REQUEST_PARAMETERS("1000","missing request parameters !"),
 
@@ -29,15 +29,15 @@ public enum ErrCode {
     FILE_UPLOAD_FAILED("1007","file upload failed !"),
 
     // 第三方接口异常
-    THIRD_PARTY_INTERFACE_ERR("1010","Third party interface exception !"),
-
-
-    // ------------ 2000 业务提示 ------------
-    // 手机号码为空
-    CELL_PHONE_NUMBER_IS_EMPTY("2000","cell phone number is empty !"),
+    THIRD_PARTY_INTERFACE_ERR("1010","third party interface exception !"),
 
     //  校验验证码错误
-    VERIFY_COD_ERROR("2001","verify code error !");
+    VERIFY_COD_ERROR("1011","verify code error !"),
+
+    // 手机号为空
+    CELL_PHONE_NUMBER_IS_EMPTY("1012","cell phone number is empty !");
+
+
 
 
     private String errCode;

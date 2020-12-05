@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.wx.mapper.UserInfoMapper"><!--用户信息-->
+    <resultMap id="BaseResultMap" type="com.wechat.wx.entity.UserInfoBean">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="project" jdbcType="VARCHAR" property="project" />
+        <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+        <result column="registration_time" jdbcType="TIMESTAMP" property="registrationTime" />
+        <result column="gzh_open_id" jdbcType="VARCHAR" property="gzhOpenId" />
+        <result column="xcx_open_id" jdbcType="VARCHAR" property="xcxOpenId" />
+        <result column="card_id" jdbcType="VARCHAR" property="cardId" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+        <result column="gender" jdbcType="VARCHAR" property="gender" />
+        <result column="gender_name" jdbcType="VARCHAR" property="genderName" />
+        <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+        <result column="level" jdbcType="VARCHAR" property="level" />
+        <result column="level_name" jdbcType="VARCHAR" property="levelName" />
+        <result column="head_portrait" jdbcType="VARCHAR" property="headPortrait" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, project, project_name, registration_time, gzh_open_id, xcx_open_id,
+        card_id, phone, name, nickname, gender, gender_name, birthday, level, level_name,
+        head_portrait
+    </sql>
+    <select id="selectByCardId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_info
+        where card_id = #{cardId,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 通过手机号码查询卡号 -->
+    <select id="selectCardIdByPhone" resultType="java.lang.String">
+        select card_id from user_info where project = #{projectId} and phone = #{phone}
+    </select>
+   <!-- 通过公众号openId查询卡号 -->
+    <select id="selectCardIdByOpenId" resultType="java.lang.String">
+        select card_id from user_info where gzh_open_id = #{phone}
+    </select>
+
+    <!--通过 OpenId 更新会员信息-->
+    <update id="updateByOpenId" parameterType="com.wechat.wx.entity.UserInfoBean">
+        update user_info
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="genderName != null">
+                gender_name = #{genderName,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="levelName != null">
+                level_name = #{levelName,jdbcType=VARCHAR},
+            </if>
+            <if test="headPortrait != null">
+                head_portrait = #{headPortrait,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where
+        card_id = #{cardId,jdbcType=VARCHAR}
+    </update>
+</mapper>

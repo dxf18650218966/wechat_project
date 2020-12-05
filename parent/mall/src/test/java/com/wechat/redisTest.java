@@ -7,15 +7,18 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.wechat.crypto.AESUtils;
 import com.wechat.crypto.Base64Util;
 import com.wechat.crypto.MD5Util;
+import com.wechat.model.BusinessCode;
 import com.wechat.tool.DateUtil;
 import com.wechat.tool.RedisUtil;
 import com.wechat.wx.entity.AutoReplyBean;
 import com.wechat.wx.mapper.AutoReplyMapper;
+import com.wechat.wx.mapper.UserInfoMapper;
 import com.wechat.wx.model.WxUserInfo;
+import com.wechat.wx.util.AESUtils;
 import com.wechat.wx.util.MaterialImgUtil;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,18 +56,13 @@ public class redisTest {
     AutoReplyMapper autoReplyMapper;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    UserInfoMapper userInfoMapper;
     @Test
     public void test() throws Exception{
-
-        HashMap<String, Object> objectObjectHashMap = new HashMap<>(16);
-        objectObjectHashMap.put("aaa","bbb");
-        objectObjectHashMap.put("aaa","bbb");
-        objectObjectHashMap.put("ccc","ccc");
-        redisUtil.set("aaaaa",objectObjectHashMap);
-
-        redisTemplate.expire("aaaaa",3, TimeUnit.MINUTES);
-        Console.log( redisTemplate.opsForValue().getOperations().getExpire("aaaaa"));
-
+        //String cardId = userInfoMapper.selectCardIdByPhone("18650218966");
+        Console.log("--------------");
+        Console.log(BusinessCode.json(BusinessCode.PLEASE_REGISTER));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.wechat.wx.mapper;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wechat.wx.entity.GzhMenuBean;
 import org.springframework.stereotype.Component;
@@ -11,5 +12,6 @@ import org.springframework.stereotype.Component;
  * @date 2020/11/14 14:51
  */
 @Component
+@TableName("gzh_menu")
 public interface GzhMenuMapper extends BaseMapper<GzhMenuBean> {
 }

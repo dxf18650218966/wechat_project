@@ -5,7 +5,7 @@ package com.wechat.constant;
  * @Author dai
  * @Date 2020/1/10
  */
-public interface UrlConstant {
+public interface UrlConst {
     //-----------------------------------微信模块-------------------------------------
     /**
      * 统一下单接口

@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wechat.common.define.RedisKeyConst;
-import com.wechat.crypto.AESUtils;
 import com.wechat.tool.DateUtil;
 import com.wechat.tool.RandomUtil;
 import com.wechat.tool.RedisUtil;
@@ -13,6 +12,7 @@ import com.wechat.wx.entity.UserInfoBean;
 import com.wechat.wx.mapper.UserAccountMapper;
 import com.wechat.wx.mapper.UserInfoMapper;
 
+import com.wechat.wx.util.AESUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,16 +61,15 @@ public class LoginService {
     /**
      * 通过手机号，判断用户是否已存在
      * @param phoneNumber 手机号
-     * @return 存在返回true
+     * @return 卡号
      */
-    public Boolean existsUserByPhone(String phoneNumber) {
-        String cardId = userInfoMapper.selectCardIdByPhone(phoneNumber);
-        if(StrUtil.isBlank(cardId)){
-            return false;
+    public String existsUserByPhone(String projectId ,String phoneNumber) {
+        String cardId = userInfoMapper.selectCardIdByPhone(projectId, phoneNumber);
+        if(StrUtil.isNotBlank(cardId)){
+            // 清用户缓存
+            redisUtil.del(RedisKeyConst.CARD_ID + cardId);
         }
-        // 清用户缓存
-        redisUtil.del(RedisKeyConst.CARD_ID + cardId);
-        return true;
+        return cardId;
     }
 
     /**
@@ -78,14 +77,11 @@ public class LoginService {
      * @param openId 公众号openId
      * @return 存在返回true
      */
-    public Boolean existsUserByOpenId(String openId) {
+    public String existsUserByOpenId(String openId) {
         String cardId = userInfoMapper.selectCardIdByOpenId(openId);
-        if(StrUtil.isBlank(cardId)){
-            return false;
-        }
         // 清用户缓存
         redisUtil.del(RedisKeyConst.CARD_ID + cardId);
-        return true;
+        return cardId;
     }
 
     /**
@@ -149,6 +145,6 @@ public class LoginService {
             default :
                 userInfoBean.setGenderName("未知");
         }
-        return userInfoMapper.updateByPhoneNumber(userInfoBean);
+        return userInfoMapper.updateByOpenId(userInfoBean);
     }
 }

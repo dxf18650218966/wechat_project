@@ -1,5 +1,6 @@
 package com.wechat.wx.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
  * @Date 2020/11/1
  */
 @Data
+@TableName("user_info")
 public class UserInfoBean implements Serializable {
   private static final long serialVersionUID = -7877767478650942199L;
   private String id;

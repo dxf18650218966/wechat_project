@@ -14,26 +14,34 @@ import org.springframework.stereotype.Component;
 public interface UserInfoMapper extends BaseMapper<UserInfoBean> {
 
     /**
-     * 通过手机号码查询卡号
+     * 查询卡号
+     * @param projectId 项目id
+     * @param phone 手机号
      * @return 会员卡号
      */
-    String selectCardIdByPhone(String phone);
+    String selectCardIdByPhone(String projectId, String phone);
 
     /**
-     * 通过公众号openId查询卡号
+     * 查询卡号
      * @param openId 公众号openId
      * @return 会员卡号
      */
     String selectCardIdByOpenId(String openId);
 
     /**
-     * 通过手机号更新会员信息
+     * 更新
+     * @param userInfoBean 会员信息
      * @return
      */
-    Boolean updateByPhoneNumber(UserInfoBean userInfoBean);
+    Boolean updateByOpenId(UserInfoBean userInfoBean);
 
-
+    /**
+     * 会员信息
+     * @param cardId 会员卡号
+     * @return
+     */
     UserInfoBean selectByCardId(String cardId);
 
 
 }
+
