@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wechat.common.define.RedisKeyConst;
+import com.wechat.constant.SystemConst;
 import com.wechat.tool.DateUtil;
 import com.wechat.tool.RandomUtil;
 import com.wechat.tool.RedisUtil;
@@ -59,7 +60,8 @@ public class LoginService {
     }
 
     /**
-     * 通过手机号，判断用户是否已存在
+     * 判断用户是否已存在
+     * @param projectId 项目
      * @param phoneNumber 手机号
      * @return 卡号
      */
@@ -73,14 +75,16 @@ public class LoginService {
     }
 
     /**
-     * 通过手机号，判断用户是否已存在
+     * 判断用户是否已存在
      * @param openId 公众号openId
-     * @return 存在返回true
+     * @return 卡号
      */
     public String existsUserByOpenId(String openId) {
         String cardId = userInfoMapper.selectCardIdByOpenId(openId);
-        // 清用户缓存
-        redisUtil.del(RedisKeyConst.CARD_ID + cardId);
+        if(StrUtil.isNotBlank(cardId)){
+            // 清用户缓存
+            redisUtil.del(RedisKeyConst.CARD_ID + cardId);
+        }
         return cardId;
     }
 
@@ -99,14 +103,14 @@ public class LoginService {
         userInfoBean.setRegistrationTime(DateUtil.date());
         // 性别
         switch (userInfoBean.getGender()){
-            case "1":
-                userInfoBean.setGenderName("男性");
+            case SystemConst.ONE :
+                userInfoBean.setGenderName(SystemConst.SEX_MAN );
                 break;
-            case "2":
-                userInfoBean.setGenderName("女性");
+            case SystemConst.TWO :
+                userInfoBean.setGenderName(SystemConst.SEX_GIRL );
                 break;
             default :
-                userInfoBean.setGenderName("未知");
+                userInfoBean.setGenderName(SystemConst.SEX_UNKNOWN );
         }
 
         // :: 账户信息
@@ -115,9 +119,9 @@ public class LoginService {
         userAccountBean.setCardId(cardId);
         userAccountBean.setPhone(userInfoBean.getPhone());
         userAccountBean.setIntegral(0);
-        userAccountBean.setBalance(BigDecimal.ZERO);
-        userAccountBean.setWithoutCode("0");
-        userAccountBean.setWithoutCodeName("否");
+        userAccountBean.setBalance(BigDecimal.ZERO );
+        userAccountBean.setWithoutCode(SystemConst.ZERO );
+        userAccountBean.setWithoutCodeName(SystemConst.NO );
 
         int res1 = userInfoMapper.insert(userInfoBean);
         int res2 = userAccountMapper.insert(userAccountBean);
@@ -136,15 +140,15 @@ public class LoginService {
     public Boolean updateUserInfo(UserInfoBean userInfoBean) {
         // 性别
         switch (userInfoBean.getGender()){
-            case "1":
-                userInfoBean.setGenderName("男性");
+            case SystemConst.ONE :
+                userInfoBean.setGenderName(SystemConst.SEX_MAN );
                 break;
-            case "2":
-                userInfoBean.setGenderName("女性");
+            case SystemConst.TWO :
+                userInfoBean.setGenderName(SystemConst.SEX_GIRL );
                 break;
             default :
-                userInfoBean.setGenderName("未知");
+                userInfoBean.setGenderName(SystemConst.SEX_UNKNOWN );
         }
-        return userInfoMapper.updateByOpenId(userInfoBean);
+        return userInfoMapper.updateByCardId(userInfoBean);
     }
 }

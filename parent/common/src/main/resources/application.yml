@@ -19,3 +19,4 @@ spring:
         max-idle: 8
         #连接池最小空闲连接 默认0
         min-idle: 0
+

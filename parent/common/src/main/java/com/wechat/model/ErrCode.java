@@ -8,37 +8,38 @@ package com.wechat.model;
 public enum ErrCode {
     // ------------  通讯失败、业务失败，错误码 ---------
     // 缺少请求参数
-    MISSING_REQUEST_PARAMETERS("1000","missing request parameters !"),
+    MISSING_REQUEST_PARAMETERS ("1000","missing request parameters !"),
 
     // 请求参数错误
-    REQUEST_PARAMETER_ERROR("1001","request parameter error !"),
+    REQUEST_PARAMETER_ERROR ("1001","request parameter error !"),
 
     // 请登陆
-    PLEASE_LOG_IN("1003","please log in !"),
+    PLEASE_LOG_IN ("1003","please log in !"),
 
     // 系统内部错误
-    SYSTEM_INTERNAL_ERROR("1004","system internal error !"),
+    SYSTEM_INTERNAL_ERROR ("1004","system internal error !"),
 
     // 签名错误
-    SIGN_ERROR("1005","sign error !"),
+    SIGN_ERROR ("1005","sign error !"),
 
     // 图片上传失败
-    IMG_UPLOAD_FAILED("1006","img upload failed !"),
+    IMG_UPLOAD_FAILED ("1006","img upload failed !"),
 
     // 文件上传失败
-    FILE_UPLOAD_FAILED("1007","file upload failed !"),
+    FILE_UPLOAD_FAILED ("1007","file upload failed !"),
 
     // 第三方接口异常
-    THIRD_PARTY_INTERFACE_ERR("1010","third party interface exception !"),
+    THIRD_PARTY_INTERFACE_ERR ("1010","third party interface exception !"),
 
     //  校验验证码错误
-    VERIFY_COD_ERROR("1011","verify code error !"),
+    VERIFY_COD_ERROR ("1011","verify code error !"),
 
     // 手机号为空
-    CELL_PHONE_NUMBER_IS_EMPTY("1012","cell phone number is empty !");
+    CELL_PHONE_NUMBER_IS_EMPTY ("1012","cell phone number is empty !"),
 
+    SAVE_FAIL ("1020"," 保存失败 !"),
 
-
+    DEL_FAIL ("1020"," 删除失败 !");
 
     private String errCode;
     private String errMsg;

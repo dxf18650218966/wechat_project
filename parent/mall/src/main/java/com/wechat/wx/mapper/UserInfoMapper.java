@@ -33,7 +33,7 @@ public interface UserInfoMapper extends BaseMapper<UserInfoBean> {
      * @param userInfoBean 会员信息
      * @return
      */
-    Boolean updateByOpenId(UserInfoBean userInfoBean);
+    Boolean updateByCardId(UserInfoBean userInfoBean);
 
     /**
      * 会员信息

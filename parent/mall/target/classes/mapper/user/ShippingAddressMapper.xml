@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.user.mapper.ShippingAddressMapper">
+
+   <update id="cancelDefault">
+        update shipping_address set set_to_default = '0' , set_to_default_name = '否'
+        where card_id = #{card_id} and set_to_default = '1'
+   </update>
+
+ <!-- <resultMap id="BaseResultMap" type="generate.ShippingAddress">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="foreign_key" jdbcType="VARCHAR" property="foreignKey" />
+    <result column="card_id" jdbcType="VARCHAR" property="cardId" />
+    <result column="consignee" jdbcType="VARCHAR" property="consignee" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="set_to_default" jdbcType="VARCHAR" property="setToDefault" />
+    <result column="set_to_default_name" jdbcType="VARCHAR" property="setToDefaultName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, foreign_key, card_id, consignee, phone, region, address, set_to_default, set_to_default_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shipping_address
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from shipping_address
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="generate.ShippingAddress" useGeneratedKeys="true">
+    insert into shipping_address (foreign_key, card_id, consignee, 
+      phone, region, address, 
+      set_to_default, set_to_default_name)
+    values (#{foreignKey,jdbcType=VARCHAR}, #{cardId,jdbcType=VARCHAR}, #{consignee,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{setToDefault,jdbcType=VARCHAR}, #{setToDefaultName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="generate.ShippingAddress" useGeneratedKeys="true">
+    insert into shipping_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="foreignKey != null">
+        foreign_key,
+      </if>
+      <if test="cardId != null">
+        card_id,
+      </if>
+      <if test="consignee != null">
+        consignee,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="region != null">
+        region,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="setToDefault != null">
+        set_to_default,
+      </if>
+      <if test="setToDefaultName != null">
+        set_to_default_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="foreignKey != null">
+        #{foreignKey,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null">
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="consignee != null">
+        #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="setToDefault != null">
+        #{setToDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="setToDefaultName != null">
+        #{setToDefaultName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="generate.ShippingAddress">
+    update shipping_address
+    <set>
+      <if test="foreignKey != null">
+        foreign_key = #{foreignKey,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null">
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="consignee != null">
+        consignee = #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="setToDefault != null">
+        set_to_default = #{setToDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="setToDefaultName != null">
+        set_to_default_name = #{setToDefaultName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="generate.ShippingAddress">
+    update shipping_address
+    set foreign_key = #{foreignKey,jdbcType=VARCHAR},
+      card_id = #{cardId,jdbcType=VARCHAR},
+      consignee = #{consignee,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      set_to_default = #{setToDefault,jdbcType=VARCHAR},
+      set_to_default_name = #{setToDefaultName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>-->
+
+</mapper>

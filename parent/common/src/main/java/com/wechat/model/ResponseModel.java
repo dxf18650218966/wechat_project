@@ -1,7 +1,10 @@
 package com.wechat.model;
 
 import com.wechat.constant.SystemConst;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -10,6 +13,8 @@ import java.io.Serializable;
  * @Date 2020/11/22 
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ResponseModel implements Serializable {
     private static final long serialVersionUID = -8554993608663807799L;
 

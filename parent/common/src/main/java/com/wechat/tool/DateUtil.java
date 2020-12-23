@@ -596,7 +596,7 @@ public class DateUtil {
 
     // ------------------- 日期相差时长 -----------------
 
-    /**
+    /** 相差时长
      * @param start 开始时间
      * @param end 结束时间
      * @return 相差天数
@@ -606,7 +606,7 @@ public class DateUtil {
         return duration.toDays();
     }
 
-    /**
+    /** 相差时长
      * @param start 开始时间
      * @param end 结束时间
      * @return 相差小时数
@@ -616,7 +616,7 @@ public class DateUtil {
         return duration.toHours();
     }
 
-    /**
+    /** 相差时长
      * @param start 开始时间
      * @param end 结束时间
      * @return 相差分钟数
@@ -626,7 +626,7 @@ public class DateUtil {
         return duration.toMinutes();
     }
 
-    /**
+    /** 相差时长
      * @param start 开始时间
      * @param end 结束时间
      * @return 相差秒数
@@ -636,7 +636,7 @@ public class DateUtil {
         return duration.toMillis()/1000;
     }
 
-    /**
+    /** 相差时长
      * @param start 开始时间
      * @param end 结束时间
      * @return 相差毫秒数

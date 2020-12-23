@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Struct;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -49,10 +48,10 @@ public class LoginController {
      * 小程序登录
      * 流程：
      *    前端：
-     *         1：通过 wx.checkSession 判断会话秘钥 session_key 是否过期，如果过期重新调用此接口登录，并且把已经失效的session_token传递给后端清除
-     *         2：首先通过 wx.login 获取 code 用户登录凭证（有效期五分钟）
-     *         3：wx.getUserInfo 获取微信授权，得到用户信息和手机号，不包含 openid 等敏感信息
-     *         4：调后台登录服务
+     *         1：通过微信的 wx.checkSession 判断会话秘钥 session_key 是否过期， 通过后端的check_token接口判断session_token是否过期，
+     *            如果其中一个过期就会重新调用此接口登录，并且把已经失效的session_token传递给后端清除
+     *         2：通过 wx.login 获取 code 用户登录凭证（有效期五分钟）
+     *         3：获取微信授权( wx.getUserInfo )，得到用户信息和手机号，不包含 openid 等敏感信息
      *    后端：
      *         1：通过 appid + appsecret + code 调用微信登录凭证，获取到 session_key（会话秘钥）、 openid（用户唯一标识）、unionid(用户唯一标识) 等
      *         2：获取手机号 (因为没有UnionID ，只能通过手机号关联)
@@ -62,8 +61,6 @@ public class LoginController {
      *          （session_token , session_key + openid） , session_token：UUID
      *         4: 添加用户数据: 已注册过的用户，只需要更新用户信息，返回session_token
      *
-     * @param wxLoginInfo
-     * @return
      */
     @PostMapping("small_program")
     public Object smallProgramLogin(@Validated @RequestBody WxLoginInfo wxLoginInfo){
@@ -158,8 +155,8 @@ public class LoginController {
      *          3：通过access_token拉取会员信息
      *          4: 通过openId 判断用户是否已注册
      *                  已注册：更新会员
-     *                  未注册：手机号必须传入（提示前端去注册页面）
-     *          5：自定义登录状态 session_token，有效期为7天
+     *                  未注册：跳转注册页面（调用注册接口）
+     *          5：自定义登录状态 session_token，有效期为7天（前后端都保存7天）
      *
      */
     @PostMapping("mp_login")
@@ -215,25 +212,23 @@ public class LoginController {
         //  通过openId 判断用户是否已注册 (清除用户信息缓存)
         String cardId = loginService.existsUserByOpenId(openid);
         if(StrUtil.isBlank(cardId)){
-            // 跳转注册页面
-            JSONObject json = BusinessCode.json(BusinessCode.PLEASE_REGISTER );
-            Console.log(JSONObject.toJSONString(userInfoBean));
+            // 未注册：跳转注册页面
+            JSONObject json = BusinessCode.json( BusinessCode.PLEASE_REGISTER );
+            // 由于code只能调用一次，所以只能将得到的数据加密后传递给注册页面，到时调用注册接口 `mp_registered` 再传递过去
             json.put("userInfo", AESUtils.encrypt(JSONObject.toJSONString(userInfoBean)));
             return ResponseUtil.resultSuccess(json);
         }
 
-        // 更新用户信息
+        // 已注册：更新用户信息
         userInfoBean.setCardId(cardId);
         Boolean res = loginService.updateUserInfo(userInfoBean);
-        // 登录成功
         if (res){
             // 自定义登录状态 session_token，有效期7天
             String sessionToken = RandomUtil.ensureNoRiskAtAll();
             redisUtil.set(sessionToken, openid, 7, TimeUnit.DAYS );
 
             // 响应前端
-            JSONObject response = new JSONObject();
-            response.put("code","2001");
+            JSONObject response = BusinessCode.json( BusinessCode.REGISTERED );
             response.put("session_token", sessionToken);
             response.put("card_id", userInfoBean.getCardId());
             return ResponseUtil.resultSuccess(response);
@@ -243,12 +238,11 @@ public class LoginController {
 
 
     /**
-     * 注册
-     * @param map
-     * @return
+     * 公众号注册
      */
     @PostMapping("mp_registered")
     public Object mpRegistered(@Validated @RequestBody HashMap<String,String> map){
+        // 用户数据（由登录接口 mp_login 返回）
         String userData = map.get("user_data");
         String phoneCipher = map.get("phone");
 
@@ -292,7 +286,6 @@ public class LoginController {
 
     /**
      * 校验小程序sessionToken是否过期
-     * @param map
      * @return true 没过期
      */
     @PostMapping("check_token")

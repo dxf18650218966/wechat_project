@@ -19,6 +19,9 @@ public interface SystemConst {
     String ONE = "1";
     String TWO = "2";
 
+    String YES = "是";
+    String NO = "否";
+
     // 编码
     String UTF8 = "UTF-8";
     String GBK = "GBK";
@@ -36,14 +39,19 @@ public interface SystemConst {
     String FORMAT8 = "yyyyMMdd";
     String FORMAT9 = "HHmmss";
     String FORMAT10 = "yyyyMMddHHmmss";
-    DateTimeFormatter FORMATTER1 = DateTimeFormatter.ofPattern(FORMAT1);
-    DateTimeFormatter FORMATTER2 = DateTimeFormatter.ofPattern(FORMAT2);
-    DateTimeFormatter FORMATTER3 = DateTimeFormatter.ofPattern(FORMAT3);
-    DateTimeFormatter FORMATTER4 = DateTimeFormatter.ofPattern(FORMAT4);
-    DateTimeFormatter FORMATTER5 = DateTimeFormatter.ofPattern(FORMAT5);
-    DateTimeFormatter FORMATTER6 = DateTimeFormatter.ofPattern(FORMAT6);
-    DateTimeFormatter FORMATTER7 = DateTimeFormatter.ofPattern(FORMAT7);
-    DateTimeFormatter FORMATTER8 = DateTimeFormatter.ofPattern(FORMAT8);
-    DateTimeFormatter FORMATTER9 = DateTimeFormatter.ofPattern(FORMAT9);
-    DateTimeFormatter FORMATTER10 = DateTimeFormatter.ofPattern(FORMAT10);
+    DateTimeFormatter FORMATTER1 = DateTimeFormatter.ofPattern(FORMAT1 );
+    DateTimeFormatter FORMATTER2 = DateTimeFormatter.ofPattern(FORMAT2 );
+    DateTimeFormatter FORMATTER3 = DateTimeFormatter.ofPattern(FORMAT3 );
+    DateTimeFormatter FORMATTER4 = DateTimeFormatter.ofPattern(FORMAT4 );
+    DateTimeFormatter FORMATTER5 = DateTimeFormatter.ofPattern(FORMAT5 );
+    DateTimeFormatter FORMATTER6 = DateTimeFormatter.ofPattern(FORMAT6 );
+    DateTimeFormatter FORMATTER7 = DateTimeFormatter.ofPattern(FORMAT7 );
+    DateTimeFormatter FORMATTER8 = DateTimeFormatter.ofPattern(FORMAT8 );
+    DateTimeFormatter FORMATTER9 = DateTimeFormatter.ofPattern(FORMAT9 );
+    DateTimeFormatter FORMATTER10 = DateTimeFormatter.ofPattern(FORMAT10 );
+
+    // 性别
+    String SEX_MAN = "男";
+    String SEX_GIRL = "女";
+    String SEX_UNKNOWN = "未知";
 }

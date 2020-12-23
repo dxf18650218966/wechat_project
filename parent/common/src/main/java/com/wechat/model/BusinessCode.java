@@ -3,6 +3,7 @@ package com.wechat.model;
 import com.alibaba.fastjson.JSONObject;
 
 /**
+ * 业务成功，业务码
  * @author dxf
  * @version 1.0
  * @date 2020/12/5 12:22
@@ -11,9 +12,15 @@ public enum BusinessCode {
     // ------------  业务成功，业务码 ---------
 
     /**
-     * 请注册
+     * 未注册
      */
-    PLEASE_REGISTER("2000","please register !");
+    PLEASE_REGISTER("2000","please register !"),
+
+    /**
+     * 已注册
+     */
+    REGISTERED("2001","registered !");
+
 
     private String code;
     private String msg;

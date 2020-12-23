@@ -59,3 +59,13 @@ sys:
   absolute-path: https://zysy.injoy-mall.cn/obpm/pay/?weixinId=35002#
   # 文件上传路径
   upload-path: D:\uploadField\
+
+
+
+# ----------- MinIO文件系统  --------------
+minio:
+  endpoint: http://47.112.119.181
+  port: 9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+  secure: false

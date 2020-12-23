@@ -1,22 +1,15 @@
 package com.wechat.wx.service;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.wechat.model.ErrCode;
-import com.wechat.model.HttpClientResult;
-import com.wechat.model.ResponseUtil;
 import com.wechat.constant.SystemConst;
 import com.wechat.crypto.UrlEncodeUtil;
-import com.wechat.tool.HttpUtil;
 import com.wechat.tool.ObjectUtil;
 import com.wechat.wx.entity.GzhMenuBean;
 import com.wechat.wx.model.Level1MenuModel;
 import com.wechat.wx.model.Level2MenuModel;
 import com.wechat.wx.mapper.GzhMenuMapper;
 import com.wechat.wx.model.WechatUrlConst;
-import com.wechat.wx.model.WxCommonConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -151,6 +151,13 @@
             <artifactId>bcprov-jdk15on</artifactId>
             <version>1.55</version>
         </dependency>
+
+        <!-- minio 对象存储服务器 -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>7.1.4</version>
+        </dependency>
     </dependencies>
 
     <build>

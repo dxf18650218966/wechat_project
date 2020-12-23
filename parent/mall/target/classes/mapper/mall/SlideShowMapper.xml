@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.mall.mapper.SlideShowMapper">
+  <resultMap id="BaseResultMap" type="com.wechat.mall.entity.SlideShowBean">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="jump_page" jdbcType="VARCHAR" property="jumpPage" />
+    <result column="jump_page_name" jdbcType="VARCHAR" property="jumpPageName" />
+    <result column="sort" jdbcType="NUMERIC" property="sort" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+  </resultMap>
+
+  <select id="selectByProject" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, name, jump_page, jump_page_name, sort, img from slide_show
+    where project = #{project} and show = '1'
+    order by sort
+  </select>
+</mapper>

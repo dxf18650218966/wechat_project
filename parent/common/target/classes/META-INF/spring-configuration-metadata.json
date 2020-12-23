@@ -1,0 +1,11 @@
+{
+  "groups": [
+    {
+      "name": "minio",
+      "type": "com.wechat.minio.conf.MinioConfig",
+      "sourceType": "com.wechat.minio.conf.MinioConfig"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

@@ -12,4 +12,8 @@ public interface BusinessMsgConst {
     String CHECK_SUCCESS = "校验成功 !";
 
     String USER_ALREADY_EXISTS = "您已是会员，无需重复注册";
+
+    String SAVE_OK = "保存成功";
+
+    String DEL_OK= "删除成功";
 }

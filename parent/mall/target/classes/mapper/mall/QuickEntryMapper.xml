@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wechat.mall.mapper.QuickEntryMapper">
+  <resultMap id="BaseResultMap" type="com.wechat.mall.entity.QuickEntryBean">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sort" jdbcType="NUMERIC" property="sort" />
+    <result column="logo" jdbcType="VARCHAR" property="logo" />
+    <result column="jump_page" jdbcType="VARCHAR" property="jumpPage" />
+    <result column="jump_page_name" jdbcType="VARCHAR" property="jumpPageName" />
+  </resultMap>
+
+  <select id="selectByProject" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, name, sort, logo, jump_page, jump_page_name from quick_entry
+    where project = #{project} and show = '1'
+    order by sort
+  </select>
+</mapper>
