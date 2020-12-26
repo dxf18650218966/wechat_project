@@ -23,19 +23,7 @@ spring:
       max-active: 20
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
-  #----------- redis --------------
-  redis:
-    host: 127.0.0.1
-    database: 0
-    port: 6379
-    password:
-    timeout: 5000 #连接超时时间（毫秒）
-    jedis:
-      pool:
-        max-active: 1000 # 连接池最大连接数（使用负值表示没有限制）
-        max-wait: 1000 # 连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-idle: 51 # 连接池中的最大空闲连接
-        min-idle: 0
+
 #----------- mybatis -------------
 mybatis-plus:
   #指定mybatis映射文件的地址 【**任意多级目录、 *多个任意字符】
