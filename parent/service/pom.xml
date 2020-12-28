@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>thirdparty</artifactId>
+    <artifactId>service</artifactId>
 
     <dependencies>
         <!--子模块和子模块之间需要引用才能调用-->

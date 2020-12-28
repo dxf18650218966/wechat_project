@@ -22,7 +22,7 @@
         <module>pay</module>
         <module>common</module>
         <module>mall</module>
-        <module>thirdparty</module>
+        <module>service</module>
     </modules>
 
     <!-- 在父项目中的 <dependencies>中定义的所有依赖，在子项目中都会直接继承-->
