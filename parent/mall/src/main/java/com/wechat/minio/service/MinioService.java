@@ -1,4 +1,4 @@
-package com.wechat.file.minio.service;
+package com.wechat.minio.service;
 
 import cn.hutool.core.util.RandomUtil;
 import com.wechat.constant.SystemConst;

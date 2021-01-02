@@ -41,6 +41,15 @@ spring:
         #连接池最小空闲连接 默认0
         min-idle: 0
 
+  #----------- Elasticsearch --------------
+  elasticsearch:
+    rest:
+      uris: http://127.0.0.1:9200
+      #read-timeout: "10s"
+      #username: "user"
+      #password: "secret"
+
+
 #----------- mybatis -------------
 mybatis-plus:
   #指定mybatis映射文件的地址 【**任意多级目录、 *多个任意字符】
@@ -50,6 +59,7 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
     call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 # ----------- 自定义 -------------
 sys:
@@ -69,3 +79,7 @@ minio:
   accessKey: minioadmin
   secretKey: minioadmin
   secure: false
+
+logging:
+  file:
+    path: F:\logs

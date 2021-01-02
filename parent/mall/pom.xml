@@ -23,5 +23,11 @@
             <artifactId>pay</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <!-- springboot整合elasticsearch -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
     </dependencies>
 </project>

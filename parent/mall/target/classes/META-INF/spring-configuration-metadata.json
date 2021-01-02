@@ -2,8 +2,8 @@
   "groups": [
     {
       "name": "minio",
-      "type": "com.wechat.file.minio.conf.MinioConfig",
-      "sourceType": "com.wechat.file.minio.conf.MinioConfig"
+      "type": "com.wechat.minio.config.MinioConfig",
+      "sourceType": "com.wechat.minio.config.MinioConfig"
     }
   ],
   "properties": [
@@ -11,32 +11,32 @@
       "name": "minio.access-key",
       "type": "java.lang.String",
       "description": "accessKey类似于用户ID，用于唯一标识你的账户",
-      "sourceType": "com.wechat.file.minio.conf.MinioConfig"
+      "sourceType": "com.wechat.minio.config.MinioConfig"
     },
     {
       "name": "minio.endpoint",
       "type": "java.lang.String",
       "description": "endPoint是一个URL，域名，IPv4或者IPv6地址",
-      "sourceType": "com.wechat.file.minio.conf.MinioConfig"
+      "sourceType": "com.wechat.minio.config.MinioConfig"
     },
     {
       "name": "minio.port",
       "type": "java.lang.Integer",
       "description": "TCP\/IP端口号",
-      "sourceType": "com.wechat.file.minio.conf.MinioConfig",
+      "sourceType": "com.wechat.minio.config.MinioConfig",
       "defaultValue": 0
     },
     {
       "name": "minio.secret-key",
       "type": "java.lang.String",
       "description": "secretKey是你账户的密码",
-      "sourceType": "com.wechat.file.minio.conf.MinioConfig"
+      "sourceType": "com.wechat.minio.config.MinioConfig"
     },
     {
       "name": "minio.secure",
       "type": "java.lang.Boolean",
       "description": "如果是true，则用的是https而不是http,默认值是true",
-      "sourceType": "com.wechat.file.minio.conf.MinioConfig"
+      "sourceType": "com.wechat.minio.config.MinioConfig"
     }
   ],
   "hints": []

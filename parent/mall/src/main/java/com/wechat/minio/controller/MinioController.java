@@ -1,8 +1,8 @@
-package com.wechat.file.minio.controller;
+package com.wechat.minio.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.wechat.file.minio.service.MinioService;
+import com.wechat.minio.service.MinioService;
 import com.wechat.model.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
