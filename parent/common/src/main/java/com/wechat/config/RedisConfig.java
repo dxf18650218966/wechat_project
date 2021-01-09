@@ -12,10 +12,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-/**
+/** redis配置
  * @Auther: dxf
  * @Date: 2020/8/17 14:58
- * @Description: redis配置
  */
 @Configuration
 @AutoConfigureAfter(RedisAutoConfiguration.class)
@@ -31,7 +30,7 @@ public class RedisConfig {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
 
-        //使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值
+        // 使用Jackson2JsonRedisSerialize 替换默认序列化(默认采用的是JDK序列化)
         Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
 
         ObjectMapper mapper = new ObjectMapper();
