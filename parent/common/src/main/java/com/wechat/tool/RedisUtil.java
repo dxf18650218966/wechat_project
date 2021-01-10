@@ -48,11 +48,19 @@ public class RedisUtil {
 
     // -----------------------------------  String 操作类型  ----------------------------------------
     /**
-     * 添加键值对
+     * 添加键值对 ( 不管key是否存在，都会添加，覆盖掉value )
      */
-    public void set(String key, String value){  stringRedisTemplate.opsForValue().set(key, value);  }
+    public void set(String key, String value){
+        stringRedisTemplate.opsForValue().set(key, value);
+    }
     /**
-     * 添加键值对并设置有效期
+     * 添加键值对 (key 不存在时才添加)
+     */
+    public Boolean setIfAbsent(String key, String value){
+        return stringRedisTemplate.opsForValue().setIfAbsent(key, value);
+    }
+    /**
+     * 添加键值对并设置有效期 ( 不管key是否存在，都会添加，覆盖掉value )
      * @param key
      * @param value
      * @param timeout 有效时间
@@ -62,10 +70,64 @@ public class RedisUtil {
         stringRedisTemplate.opsForValue().set(key, value, timeout, timeUnit);
     }
 
+    /**
+     * 添加键值对并设置有效期 ( 只有当key不存在时，才会添加 )
+     * @param key
+     * @param value
+     * @param timeout 有效时间
+     * @param timeUnit 单位
+     */
+    public Boolean setIfAbsent(String key, String value, long timeout, TimeUnit timeUnit){
+        return stringRedisTemplate.opsForValue().setIfAbsent(key, value, timeout, timeUnit);
+    }
+
     public String get(String key){
         return stringRedisTemplate.opsForValue().get(key);
     }
 
+    /**
+     * 自增 (默认自增值：+1)
+     * @param key
+     * @return 自增后的value值
+     * 自增不影响有效期
+     */
+    public Long increment(String key){
+        return stringRedisTemplate.opsForValue().increment(key);
+    }
+
+    /**
+     * 自增
+     * @param key
+     * @param delta 自增值
+     * @return 自增后的value值
+     * 自增不影响有效期
+     */
+    public Long increment(String key, long delta){
+        return stringRedisTemplate.opsForValue().increment(key, delta);
+    }
+    public Double increment(String key, double delta){
+        return stringRedisTemplate.opsForValue().increment(key, delta);
+    }
+
+    /**
+     * 自减 (默认自增值：-1)
+     * @param key
+     * @return 自减后的value值
+     * 自减不影响有效期
+     */
+    public Long decrement(String key){
+        return stringRedisTemplate.opsForValue().decrement(key);
+    }
+    /**
+     * 自减
+     * @param key
+     * @param delta 自减值
+     * @return 自减后的value值
+     * 自减不影响有效期
+     */
+    public Long decrement(String key, long delta){
+        return stringRedisTemplate.opsForValue().decrement(key,delta);
+    }
 
     // -------------------------------------  Hash 操作类型  ----------------------------------
     public void set(String key, String hashKey, Object value){
@@ -83,5 +145,18 @@ public class RedisUtil {
         return (String) redisTemplate.opsForHash().get(key, hashKey);
     }
 
-
+    /**
+     * 自增
+     * @param key
+     * @param hashKey 哈希键
+     * @param delta 自增值
+     * @return 自增后的value值
+     * 自增不影响有效期
+     */
+    public Long increment(String key, Object hashKey, long delta){
+        return redisTemplate.opsForHash().increment(key, hashKey, delta);
+    }
+    public Double increment(String key, Object hashKey, double delta){
+        return redisTemplate.opsForHash().increment(key, hashKey, delta);
+    }
 }

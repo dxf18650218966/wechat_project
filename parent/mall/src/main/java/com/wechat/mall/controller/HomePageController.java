@@ -1,13 +1,17 @@
 package com.wechat.mall.controller;
 
+import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.wechat.mall.service.HomePageService;
 import com.wechat.model.ErrCode;
 import com.wechat.model.ResponseUtil;
+import com.wechat.tool.RedisLockUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 /**
  * 小程序商城首页
@@ -34,5 +38,4 @@ public class HomePageController {
 
         return homePageService.getInit(projectId);
     }
-
 }

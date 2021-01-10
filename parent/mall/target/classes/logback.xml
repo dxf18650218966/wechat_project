@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds"  debug="false">
+    <contextName>epay-batch</contextName>
+    <!--日志存放位置-->
+    <property name="LOG_HOME" value="F:\\logs" />
+
+    <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
+    <property name="OUTPUT_FORMAT" value="%date{HH:mm:ss.SSS} [%thread] %-5level %logger{50} >>> %msg%n"/>
+    <!--带颜色格式化输出-->
+    <property name="OUTPUT_FORMAT_COLOR" value="%yellow(%date{yy-MM-dd HH:mm:ss}) |%blue(%thread) |%highlight(%-5level) |%blue(%file:%line) |%cyan(%logger) >>>%magenta(%msg%n)"/>
+
+
+    <!-- 控制台输出-->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--<pattern>${OUTPUT_FORMAT}</pattern>-->
+            <pattern>${OUTPUT_FORMAT_COLOR}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <!-- 日志配置: 监听日志级别info -->
+    <appender name="INFO_LEVEL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志存放路径 -->
+            <FileNamePattern>${LOG_HOME}/%d{yyyy-MM-dd}/ats-info.log</FileNamePattern>
+            <!--保留30天的历史-->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!--输入日志的格式-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} ::: %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 日志配置: 监听日志级别error -->
+    <appender name="ERROR_LEVEL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志存放路径 -->
+            <FileNamePattern>${LOG_HOME}/%d{yyyy-MM-dd}/ats-error.log</FileNamePattern>
+            <!--保留30天的历史-->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!--输入日志的格式-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} ::: %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--输出级别   trace<debug<info<warn<error<fatal -->
+    <root level="info">
+        <!-- 控制台输出-->
+        <appender-ref ref="stdout" />
+        <!-- 日志配置 -->
+        <appender-ref ref="INFO_LEVEL" />
+        <appender-ref ref="ERROR_LEVEL" />
+    </root>
+</configuration>
