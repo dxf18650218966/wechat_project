@@ -36,8 +36,8 @@ mybatis-plus:
 
 #----------- 阿里大鱼 -------------
 aliyun:
-  access-key-id: r
-  access-key-secret: e
+  access-key-id: LTAI4GCtnWm4mPu8T2PPr4JN
+  access-key-secret: UbS4l8Ni9G8glkCTfcGpO5CoM52Gsh
   # 签名
   sign-name: 零悦mall
   # 验证码模板

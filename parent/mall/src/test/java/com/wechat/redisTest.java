@@ -14,6 +14,7 @@ import com.wechat.wx.mapper.AutoReplyMapper;
 import com.wechat.wx.mapper.UserInfoMapper;
 import com.wechat.wx.service.WxInterfaceCallService;
 import com.wechat.wx.util.MaterialImgUtil;
+import io.lettuce.core.ReadFrom;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,4 +59,10 @@ public class redisTest {
      @Autowired
      private RedisLockUtil redisLockUtil;
 
+     @Test
+    public void aa(){
+         String ggg = redisUtil.get("ggg");
+         Console.log(ggg);
+
+     }
 }

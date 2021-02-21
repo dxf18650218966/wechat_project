@@ -26,10 +26,19 @@ spring:
   #----------- redis --------------
   redis:
     host: 127.0.0.1
-    database: 0
     port: 6379
-    password:
+    #cluster:
+    #  nodes:
+    #    - 127.0.0.1:7010
+    #    - 127.0.0.1:7011
+    #    - 127.0.0.1:7020
+    #    - 127.0.0.1:7021
+    #    - 127.0.0.1:7030
+    #    - 127.0.0.1:7031
+    database: 0
+    #password: dxf123dxf
     timeout: 12000 #连接超时时间（毫秒）
+    # lettuce连接池
     lettuce:
       pool:
         # 连接池最大阻塞等待时间（使用负值表示没有限制）
@@ -62,6 +71,20 @@ mybatis-plus:
     call-setters-on-nulls: true
     # 开启sql日志
     #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# ----------- rocketmq ------------
+rocketmq:
+  # name server 连接地址
+  namesrv_addr: 127.0.0.1:9876
+  # 消息最大长度 默认1024*4(4M)    ps: 批量发送消息大小超过4M可以通过此配置
+  max_message_size: 4096
+  #发送消息超时时间,默认3s
+  send_msg_timeout: 4000
+  # 在同步模式下,发送失败最大重试次数, 默认2次
+  retry_times_when_send_failed: 2
+  # 在异步模式下,发送失败最大重试次数, 默认2次
+  retry_times_when_send_async_failed: 2
+
 
 # ----------- 自定义 -------------
 sys:
